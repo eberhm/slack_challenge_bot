@@ -1,6 +1,6 @@
 import { GithubUser } from "../ValueObjects/GithubUser";
 
-export class Reviewer {
+export class Candidate {
     private githubUser: GithubUser;
 
     constructor(githubUser: GithubUser) {
@@ -11,4 +11,4 @@ export class Reviewer {
     {
         return this.githubUser;
     }
-};
+}

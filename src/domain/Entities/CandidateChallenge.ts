@@ -1,5 +1,6 @@
+import { Candidate } from "./Candidate";
 import { Challenge } from "./Challenge";
-import { Reviewer, Candidate } from "./Reviewer";
+import { Reviewer } from "./Reviewer";
 
 
 export class EmptyReviewersSet extends Error {};

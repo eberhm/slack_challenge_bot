@@ -1,8 +1,9 @@
 import 'jest';
+import { Candidate } from '../../../src/domain/Entities/Candidate';
 import { CandidateChallenge, EmptyReviewersSet } from '../../../src/domain/Entities/CandidateChallenge';
 import { Challenge } from '../../../src/domain/Entities/Challenge';
-
-import { Reviewer, GithubUser, Candidate } from '../../../src/domain/Entities/Reviewer';
+import { Reviewer } from '../../../src/domain/Entities/Reviewer';
+import { GithubUser } from '../../../src/domain/ValueObjects/GithubUser';
 
 describe('CandidateChanllenge Entity', () => {
     it('Can be created having a valid state', () => {

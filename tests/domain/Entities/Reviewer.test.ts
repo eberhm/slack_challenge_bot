@@ -1,5 +1,9 @@
 import 'jest';
-import { GithubUser, InvalidUserNameError, Reviewer, Candidate } from '../../../src/domain/Entities/Reviewer';
+import { Reviewer } from '../../../src/domain/Entities/Reviewer';
+import { GithubUser } from '../../../src/domain/ValueObjects/GithubUser';
+import { InvalidUserNameError } from '../../../src/domain/ValueObjects/GithubUsername';
+
+
 
 describe('GithubUser', () => {
     it('Has a valid Username defined', () => {
@@ -22,14 +26,5 @@ describe('Reviewer Entity', () => {
         const reviewer = new Reviewer(githubUser);
         
         expect(reviewer.getGithubUser().getUsername()).toBe(VALID_USERNAME);
-    });
-});
-
-describe('Candidate Entity', () => {
-    it('Has a valid Username defined', () => {
-        const VALID_USERNAME = 'valid.username';
-        const githubUser = new GithubUser(VALID_USERNAME);
-        const candidate = new Candidate(githubUser);
-        expect(candidate.getGithubUser().getUsername()).toBe(VALID_USERNAME);
     });
 });
