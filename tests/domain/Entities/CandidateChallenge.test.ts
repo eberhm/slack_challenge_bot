@@ -14,15 +14,17 @@ describe('CandidateChanllenge Entity', () => {
             new Reviewer(new GithubUser('valid.username2'), new SlackUser(67890))
         ];
 
+        const candidate = new Candidate(new GithubUser('anothervalid.user'), ANY_URL);
         const challenge = new CandidateChallenge(
             ANY_URL,
-            new Candidate(new GithubUser('anothervalid.user')),    
+            candidate,    
             reviewers,
             new Challenge(ANY_URL)
         );
         expect(challenge.getUrl()).toBe(ANY_URL);
         expect(challenge.getReviewers()).toBe(reviewers);
         expect(challenge.getChallenge().getUrl()).toBe(ANY_URL);
+        expect(challenge.getCandidate()).toBe(candidate);
     });
 
     it('Cannot be created having an empty reviewers state', () => {
@@ -31,7 +33,7 @@ describe('CandidateChanllenge Entity', () => {
         expect(() => {
             const challenge = new CandidateChallenge(
                 ANY_URL,
-                new Candidate(new GithubUser('anothervalid.user')),    
+                new Candidate(new GithubUser('anothervalid.user'), ANY_URL),    
                 emptyReviewers,
                 new Challenge(new URL(ANY_URL))
             );
