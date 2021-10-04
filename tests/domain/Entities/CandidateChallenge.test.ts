@@ -4,13 +4,14 @@ import { CandidateChallenge, EmptyReviewersSet } from '../../../src/domain/Entit
 import { Challenge } from '../../../src/domain/Entities/Challenge';
 import { Reviewer } from '../../../src/domain/Entities/Reviewer';
 import { GithubUser } from '../../../src/domain/ValueObjects/GithubUser';
+import { SlackUser } from '../../../src/domain/ValueObjects/SlackUser';
 
 describe('CandidateChanllenge Entity', () => {
     it('Can be created having a valid state', () => {
         const ANY_URL = new URL('https://anything.com');
         const reviewers: Array<Reviewer> = [
-            new Reviewer(new GithubUser('valid.username1')),
-            new Reviewer(new GithubUser('valid.username2'))
+            new Reviewer(new GithubUser('valid.username1'), new SlackUser(12345)),
+            new Reviewer(new GithubUser('valid.username2'), new SlackUser(67890))
         ];
 
         const challenge = new CandidateChallenge(
