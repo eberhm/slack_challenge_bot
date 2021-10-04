@@ -3,6 +3,8 @@ import ReviewerRepository from "../Interfaces/ReviewerRepository";
 import { GithubUser } from "../ValueObjects/GithubUser";
 import { SlackUser } from "../ValueObjects/SlackUser";
 
+export class CreateReviewerError extends Error {};
+
 export class CreateReviewerCommand {
     public githubUsername: string;
     public slackId: number;
@@ -15,7 +17,7 @@ export class CreateReviewer {
         this.reviewerRepository = reviewerRepository;
     }
 
-    public run(command: CreateReviewerCommand) {
+    public async run(command: CreateReviewerCommand) {
         const reviewer = new Reviewer(
             null,
             new GithubUser(command.githubUsername),
