@@ -4,8 +4,6 @@ import { Reviewer } from '../../../src/domain/Entities/Reviewer';
 
 
 import ReviewerRepository from '../../../src/domain/Interfaces/ReviewerRepository';
-import { GithubUser } from '../../../src/domain/ValueObjects/GithubUser';
-import { SlackUser } from '../../../src/domain/ValueObjects/SlackUser';
 
 const ANY_ID = { value: 12345 };
 
