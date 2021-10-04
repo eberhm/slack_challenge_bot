@@ -18,9 +18,11 @@ describe('CandidateChanllenge Entity', () => {
             ANY_URL,
             new Candidate(new GithubUser('anothervalid.user')),    
             reviewers,
-            new Challenge(new URL(ANY_URL))
+            new Challenge(ANY_URL)
         );
         expect(challenge.getUrl()).toBe(ANY_URL);
+        expect(challenge.getReviewers()).toBe(reviewers);
+        expect(challenge.getChallenge().getUrl()).toBe(ANY_URL);
     });
 
     it('Cannot be created having an empty reviewers state', () => {

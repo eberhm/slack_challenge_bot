@@ -32,4 +32,8 @@ export class CandidateChallenge {
     public getCandidate(): Candidate {
         return this.candidate;
     }
+
+    public getChallenge(): Challenge {
+        return this.challenge;
+    }
 }
