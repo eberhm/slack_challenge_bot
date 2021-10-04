@@ -1,4 +1,4 @@
-import { GithubUser } from "../ValueObjects/GithubUser";
+import { GithubUser } from "./GithubUser";
 
 export class Candidate {
     private githubUser: GithubUser;

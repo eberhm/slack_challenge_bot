@@ -1,4 +1,4 @@
-import { Candidate } from "./Candidate";
+import { Candidate } from "../ValueObjects/Candidate";
 import { Challenge } from "./Challenge";
 import { Reviewer } from "./Reviewer";
 

@@ -1,5 +1,5 @@
 import 'jest';
-import { Candidate } from '../../../src/domain/Entities/Candidate';
+import { Candidate } from '../../../src/domain/ValueObjects/Candidate';
 import { CandidateChallenge, EmptyReviewersSetError } from '../../../src/domain/Entities/CandidateChallenge';
 import { Challenge } from '../../../src/domain/Entities/Challenge';
 import { Reviewer } from '../../../src/domain/Entities/Reviewer';

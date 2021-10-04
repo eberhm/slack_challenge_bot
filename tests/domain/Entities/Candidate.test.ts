@@ -1,5 +1,5 @@
 import 'jest';
-import { Candidate } from '../../../src/domain/Entities/Candidate';
+import { Candidate } from '../../../src/domain/ValueObjects/Candidate';
 import { GithubUser } from '../../../src/domain/ValueObjects/GithubUser';
 
 describe('Candidate Entity', () => {
