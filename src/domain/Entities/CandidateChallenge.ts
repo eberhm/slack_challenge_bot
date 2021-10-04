@@ -3,7 +3,7 @@ import { Challenge } from "./Challenge";
 import { Reviewer } from "./Reviewer";
 
 
-export class EmptyReviewersSet extends Error {};
+export class EmptyReviewersSetError extends Error {};
 
 export class CandidateChallenge {
     private githubRepositoryUrl: URL;
@@ -13,7 +13,7 @@ export class CandidateChallenge {
 
     constructor(url: URL, candidate: Candidate, reviewers: Array<Reviewer>, challenge: Challenge) {
         if (reviewers.length === 0) {
-            throw new EmptyReviewersSet('The reviewers list is empty');
+            throw new EmptyReviewersSetError('The reviewers list is empty');
         }
         this.githubRepositoryUrl = url;
         this.reviewers = reviewers;

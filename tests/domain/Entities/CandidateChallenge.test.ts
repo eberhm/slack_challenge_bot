@@ -1,6 +1,6 @@
 import 'jest';
 import { Candidate } from '../../../src/domain/Entities/Candidate';
-import { CandidateChallenge, EmptyReviewersSet } from '../../../src/domain/Entities/CandidateChallenge';
+import { CandidateChallenge, EmptyReviewersSetError } from '../../../src/domain/Entities/CandidateChallenge';
 import { Challenge } from '../../../src/domain/Entities/Challenge';
 import { Reviewer } from '../../../src/domain/Entities/Reviewer';
 import { GithubUser } from '../../../src/domain/ValueObjects/GithubUser';
@@ -35,6 +35,6 @@ describe('CandidateChanllenge Entity', () => {
                 emptyReviewers,
                 new Challenge(new URL(ANY_URL))
             );
-        }).toThrowError(EmptyReviewersSet);
+        }).toThrowError(EmptyReviewersSetError);
     });
 });
