@@ -2,9 +2,6 @@ import { Challenge } from "../Entities/Challenge";
 import ChallengeRepository from "../Interfaces/ChallengeRepository";
 
 export class CreateChallengeError extends Error {};
-export class CreateChallengeCommand {
-    public chanllengeUrl: string;
-}
 
 export class CreateChallenge {
     private challengeRepository: ChallengeRepository;
@@ -13,11 +10,11 @@ export class CreateChallenge {
         this.challengeRepository = challengeRepository;
     }
 
-    public async run(command: CreateChallengeCommand) {
+    public async run(chanllengeUrl: string) {
         try {
             const challenge = new Challenge(
                 null,
-                new URL(command.chanllengeUrl)
+                new URL(chanllengeUrl)
             );
 
             return await this.challengeRepository.create(challenge);

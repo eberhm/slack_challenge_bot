@@ -5,11 +5,6 @@ import { SlackUser } from "../ValueObjects/SlackUser";
 
 export class CreateReviewerError extends Error {};
 
-export class CreateReviewerCommand {
-    public githubUsername: string;
-    public slackId: number;
-}
-
 export class CreateReviewer {
     private reviewerRepository: ReviewerRepository;
 
@@ -17,11 +12,11 @@ export class CreateReviewer {
         this.reviewerRepository = reviewerRepository;
     }
 
-    public async run(command: CreateReviewerCommand) {
+    public async run(githubUsername: string, slackId: number) {
         const reviewer = new Reviewer(
             null,
-            new GithubUser(command.githubUsername),
-            new SlackUser(command.slackId)
+            new GithubUser(githubUsername),
+            new SlackUser(slackId)
         );
 
         return this.reviewerRepository.create(reviewer);
