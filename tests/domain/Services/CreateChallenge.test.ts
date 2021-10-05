@@ -2,7 +2,7 @@ import 'jest';
 import { CreateChallenge, CreateChallengeError } from '../../../src/domain/Services/CreateChallenge';
 import { InMemoryChallengeRepository } from '../../Infrastructure/Repositories/InMemoryChallengeRepository';
 
-describe('CreateChallenge Command handler creates a challenge and returns it newly inserted in the DB', () => {
+describe('CreateChallenge Service creates a challenge and returns it newly inserted in the DB', () => {
 
     it('can create a challenge', async () => {
         const ANY_VALID_URL = 'https://valid.url'

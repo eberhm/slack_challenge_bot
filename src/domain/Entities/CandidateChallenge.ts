@@ -1,7 +1,5 @@
 import { Identifier } from "../Interfaces/Identifier";
 import { Candidate } from "../ValueObjects/Candidate";
-import { Challenge } from "./Challenge";
-import { Reviewer } from "./Reviewer";
 
 
 export class EmptyReviewersSetError extends Error {};
@@ -9,19 +7,19 @@ export class EmptyReviewersSetError extends Error {};
 export class CandidateChallenge {
     private id: Identifier;
     private githubRepositoryUrl: URL;
-    private reviewers: Array<Reviewer>;
+    private reviewerIds: Array<Identifier>;
     private candidate: Candidate;
-    private challenge: Challenge;
+    private challengeId: Identifier;
 
-    constructor(id: Identifier, url: URL, candidate: Candidate, reviewers: Array<Reviewer>, challenge: Challenge) {
-        if (reviewers.length === 0) {
+    constructor(id: Identifier, url: URL, candidate: Candidate, reviewerIds: Array<Identifier>, challengeId: Identifier) {
+        if (reviewerIds.length === 0) {
             throw new EmptyReviewersSetError('The reviewers list is empty');
         }
         this.id = id;
         this.githubRepositoryUrl = url;
-        this.reviewers = reviewers;
+        this.reviewerIds = reviewerIds;
         this.candidate = candidate;
-        this.challenge = challenge;
+        this.challengeId = challengeId;
     }
 
     public getId() {
@@ -32,15 +30,15 @@ export class CandidateChallenge {
         return this.githubRepositoryUrl;
     }
 
-    public getReviewers(): Array<Reviewer> {
-        return this.reviewers;
+    public getReviewerIds(): Array<Identifier> {
+        return this.reviewerIds;
     }
 
     public getCandidate(): Candidate {
         return this.candidate;
     }
 
-    public getChallenge(): Challenge {
-        return this.challenge;
+    public getChallengeId(): Identifier {
+        return this.challengeId;
     }
 }

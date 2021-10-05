@@ -10,7 +10,7 @@ export class CreateChallenge {
         this.challengeRepository = challengeRepository;
     }
 
-    public async run(chanllengeUrl: string) {
+    public async run(chanllengeUrl: string): Promise<Challenge> {
         try {
             const challenge = new Challenge(
                 null,
