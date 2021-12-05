@@ -2,7 +2,7 @@ import 'jest';
 import { CreateChallenge, CreateChallengeError } from '../../../src/domain/Services/CreateChallenge';
 import { InMemoryChallengeRepository } from '../../Infrastructure/Repositories/InMemoryChallengeRepository';
 
-describe('CreateChallenge Service creates a challenge and returns it newly inserted in the DB', () => {
+describe('CreateChallenge Service creates a challenge and returns it after storing it', () => {
 
     it('can create a challenge', async () => {
         const ANY_VALID_URL = 'https://valid.url'
@@ -10,7 +10,7 @@ describe('CreateChallenge Service creates a challenge and returns it newly inser
         const commandHandler = new CreateChallenge(new InMemoryChallengeRepository());
         const createdChallenge = await commandHandler.run(ANY_VALID_URL);
 
-        expect(createdChallenge.getId()).toBe(createdChallenge.getUrl());
+        expect(createdChallenge.getId()).not.toBe(null);
         expect(createdChallenge.getUrl().toString()).toBe(new URL(ANY_VALID_URL).toString());
     });
 
@@ -27,7 +27,7 @@ describe('CreateChallenge Service creates a challenge and returns it newly inser
         const ANY_ERROR_MESSAGE = 'any error message';
 
         const challengeRepository = new InMemoryChallengeRepository();
-        challengeRepository.create = jest.fn().mockRejectedValue(new Error(ANY_ERROR_MESSAGE));
+        challengeRepository.save = jest.fn().mockRejectedValue(new Error(ANY_ERROR_MESSAGE));
         
         const commandHandler = new CreateChallenge(challengeRepository);
 

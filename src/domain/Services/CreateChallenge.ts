@@ -12,12 +12,11 @@ export class CreateChallenge {
 
     public async run(chanllengeUrl: string): Promise<Challenge> {
         try {
-            const challenge = new Challenge(
-                null,
+            const challenge = Challenge.create(
                 new URL(chanllengeUrl)
             );
 
-            return await this.challengeRepository.create(challenge);
+            return await this.challengeRepository.save(challenge);
         } catch (e) {
             throw new CreateChallengeError(e.message);
         }

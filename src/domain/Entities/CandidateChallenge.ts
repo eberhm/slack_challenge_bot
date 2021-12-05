@@ -1,4 +1,4 @@
-import { Identifier } from "../Interfaces/Identifier";
+import { generateUuid, Identifier } from "../ValueObjects/Identifier";
 import { Candidate } from "../ValueObjects/Candidate";
 
 
@@ -11,7 +11,12 @@ export class CandidateChallenge {
     private candidate: Candidate;
     private challengeId: Identifier;
 
-    constructor(id: Identifier, url: URL, candidate: Candidate, reviewerIds: Array<Identifier>, challengeId: Identifier) {
+    static create(url: URL, candidate: Candidate, reviewerIds: Array<Identifier>, challengeId: Identifier) {
+        const id = generateUuid('CandidateChallenge');
+        return new this(id, url, candidate, reviewerIds, challengeId);
+    }
+
+    private constructor(id: Identifier, url: URL, candidate: Candidate, reviewerIds: Array<Identifier>, challengeId: Identifier) {
         if (reviewerIds.length === 0) {
             throw new EmptyReviewersSetError('The reviewers list is empty');
         }
@@ -23,7 +28,7 @@ export class CandidateChallenge {
     }
 
     public getId() {
-        return this.id.value;
+        return this.id;
     }
 
     public getUrl():URL {

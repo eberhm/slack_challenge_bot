@@ -1,23 +1,21 @@
 import { Challenge } from "../../../src/domain/Entities/Challenge";
 import ChallengeRepository from "../../../src/domain/Interfaces/ChallengeRepository";
-import { Identifier } from "../../../src/domain/Interfaces/Identifier";
-
-export interface InMemoryChallengeIdentifier extends Identifier {
-    value: URL
-};
+import { Identifier } from "../../../src/domain/ValueObjects/Identifier";
 
 export class InMemoryChallengeRepository implements ChallengeRepository {
-    public storage: WeakMap<InMemoryChallengeIdentifier, Challenge> = new WeakMap();
+    public storage: Map<Identifier, Challenge> = new Map();
 
-    public create(challenge: Challenge): Promise<Challenge> {
-        const id = { value: challenge.getUrl() };
-        const newChallenge = new Challenge(id, challenge.getUrl())
-        this.storage.set(id, challenge);
+    public save(challenge: Challenge): Promise<Challenge> {
+        try {
+            this.storage.set(challenge.getId(), challenge);    
+        } catch(e) {
+            return Promise.reject(new Error(`Error saving Challenge: ${e.message}`));
+        }
 
-        return Promise.resolve(newChallenge);
+        return Promise.resolve(challenge);
     }
 
-    public findById(id: InMemoryChallengeIdentifier): Promise<Challenge> {
+    public findById(id: Identifier): Promise<Challenge> {
         return Promise.resolve(this.storage.get(id));
     }
 }

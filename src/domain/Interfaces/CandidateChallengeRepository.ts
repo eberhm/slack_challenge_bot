@@ -1,5 +1,5 @@
 import { CandidateChallenge } from "../Entities/CandidateChallenge";
 
 export default interface CandidateChallengeRepository {
-    create(challenge: CandidateChallenge): Promise<CandidateChallenge>;
+    save(challenge: CandidateChallenge): Promise<CandidateChallenge>;
 }
