@@ -1,9 +1,9 @@
 import 'jest';
 import { Challenge } from '../../../src/domain/Entities/Challenge';
 import { Reviewer } from '../../../src/domain/Entities/Reviewer';
-import { CreateCandidateChallenge, CreateCandidateChallengeError } from '../../../src/domain/Services/createCandidateChallenge';
+import { CreateCandidateChallenge, CreateCandidateChallengeError } from '../../../src/domain/Services/CreateCandidateChallenge';
 import { CreateChallenge } from '../../../src/domain/Services/CreateChallenge';
-import { CreateReviewer } from '../../../src/domain/Services/createReviewer';
+import { CreateReviewer } from '../../../src/domain/Services/CreateReviewer';
 import { Candidate } from '../../../src/domain/ValueObjects/Candidate';
 import { GithubUser } from '../../../src/domain/ValueObjects/GithubUser';
 import { InMemoryCandidateChallengeRepository } from '../../Infrastructure/Repositories/InMemoryCandidateChallengeRepository';
