@@ -10,9 +10,12 @@
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.2",
     "jest": "^27.2.4",
@@ -27,7 +30,7 @@
     "lint-fix": "eslint --fix src/**/*.ts",
     "pretty": "prettier --write 'src/**/*.ts'",
     "prepare": "husky install",
-    "precommit": "npm run lint-fix && npm run pretty",
+    "precommit": "npm run lint-fix && npm run pretty && npm run test",
     "prepush": "npm run lint"
   },
   "author": "",

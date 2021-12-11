@@ -1,7 +1,6 @@
 {
     "parser": "@typescript-eslint/parser",
     "extends": [
-        "airbnb/base",
         "plugin:@typescript-eslint/recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
@@ -20,7 +19,8 @@
             "error",
             "always"
         ],
-        "camelcase": "off",
+        "camelcase": "error",
+        "@typescript-eslint/no-extra-semi": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-explicit-any": 1,
         "@typescript-eslint/no-inferrable-types": [
@@ -29,6 +29,9 @@
                 "ignoreParameters": true
             }
         ],
+        "import/default": "off",
+        "import/no-anonymous-default-export": "error",
+        "max-classes-per-file": "off",
         "no-underscore-dangle": "off",
         "no-shadow": "off",
         "no-new": 0,

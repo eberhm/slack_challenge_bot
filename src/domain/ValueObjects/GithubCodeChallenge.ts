@@ -2,11 +2,10 @@ export class GithubCodeChallenge {
     private url: URL;
 
     constructor(url: URL) {
-        this.url = url;
+      this.url = url;
     }
 
     public getUrl(): URL {
-        return this.url;
+      return this.url;
     }
 }
-

@@ -1,8 +1,7 @@
-import { Reviewer } from "../Entities/Reviewer";
-import { Identifier } from "../ValueObjects/Identifier";
+import { Reviewer } from '../Entities/Reviewer';
+import { Identifier } from '../ValueObjects/Identifier';
 
-export default interface ReviewerRepository {
-    storage: any;
+export interface ReviewerRepository {
     save(reviewer: Reviewer): Promise<Reviewer>;
     findByIds(ids: Array<Identifier>): Promise<Array<Reviewer>>;
 }
