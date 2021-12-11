@@ -1,5 +1,5 @@
 import { Challenge } from "../../../src/domain/Entities/Challenge";
-import ChallengeRepository from "../../../src/domain/Interfaces/ChallengeRepository";
+import { ChallengeRepository } from "../../../src/domain/Interfaces/ChallengeRepository";
 import { Identifier } from "../../../src/domain/ValueObjects/Identifier";
 
 export class InMemoryChallengeRepository implements ChallengeRepository {

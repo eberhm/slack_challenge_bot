@@ -1,5 +1,5 @@
 import { CandidateChallenge } from "../../../src/domain/Entities/CandidateChallenge";
-import CandidateChallengeRepository from "../../../src/domain/Interfaces/CandidateChallengeRepository";
+import { CandidateChallengeRepository } from "../../../src/domain/Interfaces/CandidateChallengeRepository";
 import { Identifier } from "../../../src/domain/ValueObjects/Identifier";
 
 

@@ -1,5 +1,5 @@
 import { Reviewer } from '../Entities/Reviewer';
-import ReviewerRepository from '../Interfaces/ReviewerRepository';
+import { ReviewerRepository } from '../Interfaces/ReviewerRepository';
 import { GithubUser } from '../ValueObjects/GithubUser';
 import { SlackUser } from '../ValueObjects/SlackUser';
 

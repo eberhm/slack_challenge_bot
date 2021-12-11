@@ -1,5 +1,5 @@
 import { Challenge } from '../Entities/Challenge';
-import ChallengeRepository from '../Interfaces/ChallengeRepository';
+import { ChallengeRepository } from '../Interfaces/ChallengeRepository';
 
 export class CreateChallengeError extends Error {}
 

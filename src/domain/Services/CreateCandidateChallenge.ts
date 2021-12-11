@@ -1,9 +1,9 @@
 import { CandidateChallenge } from '../Entities/CandidateChallenge';
 import { Identifier } from '../ValueObjects/Identifier';
-import CandidateChallengeRepository from '../Interfaces/CandidateChallengeRepository';
+import { CandidateChallengeRepository } from '../Interfaces/CandidateChallengeRepository';
 import { Candidate } from '../ValueObjects/Candidate';
-import ReviewerRepository from '../Interfaces/ReviewerRepository';
-import ChallengeRepository from '../Interfaces/ChallengeRepository';
+import { ReviewerRepository } from '../Interfaces/ReviewerRepository';
+import { ChallengeRepository } from '../Interfaces/ChallengeRepository';
 import { GithubCodeChallenge } from '../ValueObjects/GithubCodeChallenge';
 import { GithubClient } from '../Interfaces/GithubClient';
 

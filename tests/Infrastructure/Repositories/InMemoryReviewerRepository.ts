@@ -1,11 +1,6 @@
 import { Reviewer } from "../../../src/domain/Entities/Reviewer";
 import { Identifier } from "../../../src/domain/ValueObjects/Identifier";
-import ReviewerRepository from "../../../src/domain/Interfaces/ReviewerRepository";
-import { GithubUser } from "../../../src/domain/ValueObjects/GithubUser";
-
-export interface InMemoryReviewerIdentifier extends Identifier {
-    value: GithubUser
-};
+import { ReviewerRepository } from "../../../src/domain/Interfaces/ReviewerRepository";
 
 /*
 Cosas que hay que repensarse:
