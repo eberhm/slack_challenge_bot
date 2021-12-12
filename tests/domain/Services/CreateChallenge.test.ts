@@ -6,6 +6,10 @@ import { SandboxedGithubClient } from '../../Infrastructure/Repositories/Sandbox
 describe('CreateChallenge Service creates a challenge and returns it after storing it', () => {
     let githubClient, challengeRepository;
 
+    const ANY_VALID_NAME = 'any_valid_name';
+    const ANY_VALID_URL = 'https://valid.url';
+    const ANY_INVALID_URL = 'httpsvalid.url';
+
     beforeEach(() => {
         githubClient = new SandboxedGithubClient();
         challengeRepository = new InMemoryChallengeRepository();
@@ -14,42 +18,36 @@ describe('CreateChallenge Service creates a challenge and returns it after stori
     afterEach(() => jest.restoreAllMocks());
 
     it('can create a challenge', async () => {
-        const ANY_VALID_URL = 'https://valid.url'
-
-        const commandHandler = new CreateChallenge(challengeRepository, githubClient);
-        const createdChallenge = await commandHandler.run(ANY_VALID_URL);
+        const service = new CreateChallenge(challengeRepository, githubClient);
+        const createdChallenge = await service.run(ANY_VALID_NAME, ANY_VALID_URL);
 
         expect(createdChallenge.getId()).not.toBe(null);
         expect(createdChallenge.getUrl().toString()).toBe(new URL(ANY_VALID_URL).toString());
+        expect(createdChallenge.getName()).toBe(ANY_VALID_NAME);
     });
 
 
     it('returns a rejected promise if URL is invalid', async () => {
-        const ANY_INVALID_URL = 'httpsvalid.url'
-        const commandHandler = new CreateChallenge(challengeRepository, githubClient);
+        const service = new CreateChallenge(challengeRepository, githubClient);
 
-        expect(commandHandler.run(ANY_INVALID_URL)).rejects.toBeInstanceOf(CreateChallengeError);
+        expect(service.run(ANY_VALID_NAME, ANY_INVALID_URL)).rejects.toBeInstanceOf(CreateChallengeError);
     });
 
     it('returns a rejected promise if there is an error using the repository', async () => {
-        const ANY_VALID_URL = 'https://valid.url';
         const ANY_ERROR_MESSAGE = 'any error message';
 
         challengeRepository.save = jest.fn().mockRejectedValue(new Error(ANY_ERROR_MESSAGE));
         
-        const commandHandler = new CreateChallenge(challengeRepository, githubClient);
+        const service = new CreateChallenge(challengeRepository, githubClient);
 
-        expect(commandHandler.run(ANY_VALID_URL)).rejects.toEqual(new CreateChallengeError(ANY_ERROR_MESSAGE));
+        expect(service.run(ANY_VALID_NAME, ANY_VALID_URL)).rejects.toEqual(new CreateChallengeError(ANY_ERROR_MESSAGE));
     });
 
     it('returns a rejected promise if the URL is not a valid Github repository', async () => {
-        const ANY_VALID_URL = 'https://not_a_github_repo.url';
-
         githubClient.githubRepositoryExists = jest.fn().mockResolvedValue(false);
-        
-        const commandHandler = new CreateChallenge(challengeRepository, githubClient);
+        const service = new CreateChallenge(challengeRepository, githubClient);
 
-        expect(commandHandler.run(ANY_VALID_URL)).rejects.toEqual(new CreateChallengeError(
+        expect(service.run(ANY_VALID_NAME, ANY_VALID_URL)).rejects.toEqual(new CreateChallengeError(
             `${ANY_VALID_URL} is not a valid Github Repository URL`
         ));
 

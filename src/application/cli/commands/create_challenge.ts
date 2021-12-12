@@ -4,30 +4,37 @@ import { CreateChallenge } from '../../../domain/Services/CreateChallenge';
 import { GithubClient } from '../../../Infrastructure/GithubClient';
 
 type Options = {
+  challengeName: string;
   repositoryName: string;
 };
 
-export const command: string = 'create_challenge <repositoryName>';
-export const desc: string = 'Creates a challenge using the github repositoryName as template <respositoryName>';
+export const command: string = 'create_challenge <challengeName> <repositoryName>';
+export const desc: string = 'Creates a challenge using the github repositoryName as template <respositoryName> identifying it under the specified <challengeName>';
 
 export const builder: CommandBuilder<Options, Options> = (yargs) =>
   yargs
-    .positional('repositoryName', { type: 'string', demandOption: true });
+  .positional('challengeName', { type: 'string', demandOption: true })
+  .positional('repositoryName', { type: 'string', demandOption: true });
+    
 
 export const handler = async (argv: Arguments<Options>): Promise<void> => {
-  const { repositoryName }: Options = argv;
+  const { challengeName, repositoryName }: Options = argv;
 
   try {
+    if (!repositoryName) {
+      throw new Error("repositoryName not found");
+    }
+
+    if (!challengeName) {
+      throw new Error("challengeName not found");
+    }
+
     const service = new CreateChallenge(
       new InMemoryChallengeRepository(),
       new GithubClient()
     );
 
-    if (!repositoryName) {
-      throw new Error("repositoryName not found");
-    }
-
-    await service.run(`https://github.com/${repositoryName}`);
+    await service.run(challengeName, `https://github.com/${repositoryName}`);
     process.stdout.write(`Challenge ${repositoryName} created successfully`);
     process.exit(0);
   } catch(e) {

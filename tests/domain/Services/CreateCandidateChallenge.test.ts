@@ -16,6 +16,7 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
 
     const ANY_ID = 'any_valid_uuid';
     const ANY_VALID_URL = 'https://valid.url'
+    const ANY_VALID_CHALLENGE_NAME = 'any_name'
     const ANY_GH_USERNAME = 'any_username';
     const ANY_SLACK_ID = 12453;
     const ANY_VALID_CANDIDATE = new Candidate(
@@ -34,7 +35,7 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
         reviewer = await createReviewerService.run(ANY_GH_USERNAME, ANY_SLACK_ID);
     
         const createChallengeService = new CreateChallenge(challengeRepository, githubClient);
-        challenge = await createChallengeService.run(ANY_VALID_URL);
+        challenge = await createChallengeService.run(ANY_VALID_CHALLENGE_NAME, ANY_VALID_URL);
     });
 
 
@@ -83,7 +84,7 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
 
         // saving a new challenge in the ChallengeRepository so it is found
         const challengeRepository = new InMemoryChallengeRepository();
-        const challenge = Challenge.create(new URL(ANY_VALID_URL));
+        const challenge = Challenge.create(ANY_VALID_CHALLENGE_NAME, new URL(ANY_VALID_URL));
         challengeRepository.save(challenge);
         
 
