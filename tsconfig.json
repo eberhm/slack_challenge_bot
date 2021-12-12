@@ -1,1 +1,26 @@
-{}
+{
+    "compilerOptions": {
+      "target": "es2017",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "declaration": true,
+      "declarationMap": true,
+      "inlineSourceMap": true,
+      "rootDir": "./",
+      "outDir": "./dist/main",
+      "baseUrl": ".",
+      "paths": {
+        "src/*": [
+          "src/*"
+        ]
+      }
+    },
+    "exclude": [
+      "node_modules",
+      "build",
+      "dist"
+    ],
+    "include": [
+      "src"
+    ]
+  }
