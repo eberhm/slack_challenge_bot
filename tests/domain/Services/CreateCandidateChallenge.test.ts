@@ -18,7 +18,7 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
     const ANY_VALID_URL = 'https://valid.url'
     const ANY_VALID_CHALLENGE_NAME = 'any_name'
     const ANY_GH_USERNAME = 'any_username';
-    const ANY_SLACK_ID = 12453;
+    const ANY_SLACK_ID = 'any_slack_id';
     const ANY_VALID_CANDIDATE = new Candidate(
         new GithubUser(ANY_GH_USERNAME),
         new URL(ANY_VALID_URL)
