@@ -4,7 +4,7 @@ import { InMemoryReviewerRepository } from '../../Infrastructure/Repositories/In
 
 describe('CreateReviewer Service creates a reviewer and returns it newly inserted in the DB', () => {
     const ANY_GITHUB_USERNAME = 'any_username';
-    const ANY_SLACK_ID = 12465;
+    const ANY_SLACK_ID = 'any_slack_id';
 
     it('can create a reviewer', async () => {
 

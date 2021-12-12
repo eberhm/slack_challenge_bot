@@ -12,7 +12,7 @@ export class CreateReviewer {
       this.reviewerRepository = reviewerRepository;
     }
 
-    public run(githubUsername: string, slackId: number): Promise<Reviewer> {
+    public run(githubUsername: string, slackId: string): Promise<Reviewer> {
       const reviewer = Reviewer.create(
         new GithubUser(githubUsername),
         new SlackUser(slackId),

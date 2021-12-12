@@ -1,11 +1,11 @@
 export class SlackUser {
-    private userId: number;
+    private userId: string;
 
-    constructor(id: number) {
+    constructor(id: string) {
       this.userId = id;
     }
 
-    public getUserId(): number {
+    public getUserId(): string {
       return this.userId;
     }
 }

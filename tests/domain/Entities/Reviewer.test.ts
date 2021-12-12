@@ -6,7 +6,7 @@ import { SlackUser } from '../../../src/domain/ValueObjects/SlackUser';
 describe('Reviewer Entity', () => {
     it('Has a valid GH Username and Slack User defined', () => {
         const VALID_GH_USERNAME = 'valid.username';
-        const VALID_SLACK_USERID = 124783;
+        const VALID_SLACK_USERID = 'valid_slack_id';
         const githubUser = new GithubUser(VALID_GH_USERNAME);
         const slackUser = new SlackUser(VALID_SLACK_USERID);
         const reviewer = Reviewer.create(githubUser, slackUser);
