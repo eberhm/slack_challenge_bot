@@ -5,5 +5,6 @@ import { GithubCodeChallenge } from '../ValueObjects/GithubCodeChallenge';
 
 export interface GithubClient {
     createChallengeForCandidate(challenge: Challenge, candidate: Candidate): Promise<GithubCodeChallenge>;
-    addReviewersToCodeChallenge(ghCodeChallenge: GithubCodeChallenge, reviewers: Reviewer[]): void;
+    addReviewersToCodeChallenge(ghCodeChallenge: GithubCodeChallenge, reviewers: Reviewer[]): Promise<GithubCodeChallenge>;
+    githubRepositoryExists(url: URL): Promise<boolean>;
 }

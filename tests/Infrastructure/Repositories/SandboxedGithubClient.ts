@@ -16,7 +16,11 @@ export class SandboxedGithubClient implements GithubClient {
         return new GithubCodeChallenge(new URL(urlRepository));
     }
 
-    addReviewersToCodeChallenge(ghCodeChallenge: GithubCodeChallenge, reviewers: Reviewer[]): void {
-        return;
+    async githubRepositoryExists(url: URL): Promise<boolean> {
+        return true;
+    }
+
+    async addReviewersToCodeChallenge(ghCodeChallenge: GithubCodeChallenge, reviewers: Reviewer[]): Promise<GithubCodeChallenge> {
+        return ghCodeChallenge;
     }
 }

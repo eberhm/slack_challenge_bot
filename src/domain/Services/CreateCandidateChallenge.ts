@@ -54,8 +54,8 @@ export class CreateCandidateChallenge {
           throw new CreateCandidateChallengeError(`Challenge with id: ${challengeId} not found`);
         }
 
-        this.githubClient.createChallengeForCandidate(challenge, candidate);
-        this.githubClient.addReviewersToCodeChallenge(ghCodeChallenge, reviewers);
+        await this.githubClient.createChallengeForCandidate(challenge, candidate);
+        await this.githubClient.addReviewersToCodeChallenge(ghCodeChallenge, reviewers);
 
         const candidateChallenge = CandidateChallenge.create(
           candidateChallengeUrl,
