@@ -20,9 +20,7 @@ export class CreateChallenge {
             throw new CreateChallengeError(`${chanllengeUrl} is not a valid Github Repository URL`);
         }
 
-        const challenge = Challenge.create(
-          url,
-        );
+        const challenge = Challenge.create(url);
 
         return await this.challengeRepository.save(challenge);
       } catch (e) {

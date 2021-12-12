@@ -1,6 +1,7 @@
 import type { Arguments, CommandBuilder } from 'yargs';
 import { InMemoryChallengeRepository } from '../../../../tests/Infrastructure/Repositories/InMemoryChallengeRepository';
 import { CreateChallenge } from '../../../domain/Services/CreateChallenge';
+import { GithubClient } from '../../../Infrastructure/GithubClient';
 
 type Options = {
   repositoryName: string;
@@ -18,9 +19,10 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
 
   try {
     const service = new CreateChallenge(
-      new InMemoryChallengeRepository()
+      new InMemoryChallengeRepository(),
+      new GithubClient()
     );
-    
+
     if (!repositoryName) {
       throw new Error("repositoryName not found");
     }
