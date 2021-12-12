@@ -10,6 +10,10 @@ export class Challenge {
       return new this(id, name, url);
     }
 
+    static createEmpty() {
+      return new this("", "", new URL(""));
+    }
+
     private constructor(id: Identifier, name: string, url: URL) {
       this.id = id;
       this.name = name;

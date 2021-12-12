@@ -24,6 +24,16 @@ export class CandidateChallenge {
       return new this(id, url, candidate, reviewerIds, challengeId);
     }
 
+    static createEmpty() {
+      return new this(
+        '', 
+        new URL("github.com"), 
+        Candidate.createEmpty(), 
+        [ "" ], 
+        ""
+        );
+    }
+
     private constructor(
       id: Identifier,
       url: URL,

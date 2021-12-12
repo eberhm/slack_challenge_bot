@@ -15,7 +15,12 @@ export class InMemoryCandidateChallengeRepository implements CandidateChallengeR
             return Promise.resolve(candidateChallenge);
     }
 
-    public findById(id: Identifier): Promise<CandidateChallenge> {
-        return Promise.resolve(this.storage.get(id));
+    public async findById(id: Identifier): Promise<CandidateChallenge> {
+        const candidateChallenge = this.storage.get(id) || CandidateChallenge.createEmpty();
+        if (this.storage.has(id)) {
+            return Promise.resolve(candidateChallenge);
+        } else {
+            return Promise.reject(new Error(`CandidateChallenge with id ${id} not found`));
+        }
     }
 }

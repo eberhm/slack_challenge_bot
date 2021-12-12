@@ -9,6 +9,7 @@
       "rootDir": "./",
       "outDir": "./dist/main",
       "baseUrl": ".",
+      "strictNullChecks": true,
       "paths": {
         "src/*": [
           "src/*"

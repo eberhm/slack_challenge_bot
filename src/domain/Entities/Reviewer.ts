@@ -14,6 +14,10 @@ export class Reviewer {
       return new this(id, githubUser, slackUser);
     }
 
+    static createEmpty() {
+      return new this("", new GithubUser(""), new SlackUser(""));
+    }
+
     private constructor(id: Identifier, githubUser: GithubUser, slackUser: SlackUser) {
       this.id = id;
       this.githubUser = githubUser;

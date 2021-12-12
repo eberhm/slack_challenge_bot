@@ -16,6 +16,11 @@ export class InMemoryChallengeRepository implements ChallengeRepository {
     }
 
     public findById(id: Identifier): Promise<Challenge> {
-        return Promise.resolve(this.storage.get(id));
+        const challenge = this.storage.get(id) || Challenge.createEmpty()
+        if (this.storage.has(id)) {
+            return Promise.resolve(challenge);
+        } else {
+            return Promise.reject(new Error(`Challenge with id ${id} not found`));
+        }
     }
 }

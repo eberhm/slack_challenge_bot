@@ -26,8 +26,17 @@ export class InMemoryReviewerRepository implements ReviewerRepository {
     
     
     public findByIds(ids: Array<Identifier>): Promise<Reviewer[]> {
+        /*
+        const challenge = this.storage.get(id) || Challenge.createEmpty()
+        if (this.storage.has(id)) {
+            return Promise.resolve(challenge);
+        } else {
+            return Promise.reject(new Error(`Challenge with id ${id} not found`));
+        }
+        */
+
         return Promise.resolve(ids.map((id) => {
-            return this.storage.get(id);
+            return this.storage.get(id) || Reviewer.createEmpty();
         }));
     }
 }

@@ -5,6 +5,12 @@ export class Candidate {
 
     private resumeUrl: URL;
 
+    static createEmpty() {
+      return new Candidate(
+        new GithubUser(""),
+        new URL("")
+      );
+    }
     constructor(githubUser: GithubUser, resumeUrl: URL) {
       this.githubUser = githubUser;
       this.resumeUrl = resumeUrl;

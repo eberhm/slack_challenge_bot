@@ -28,7 +28,7 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
     const candidateChallengeRepository = new InMemoryCandidateChallengeRepository();
     const challengeRepository = new InMemoryChallengeRepository();
     const githubClient = new SandboxedGithubClient();
-    let reviewer: Reviewer, challenge: Challenge = null;
+    let reviewer: Reviewer, challenge: Challenge;
 
     beforeAll(async () => {
         const createReviewerService = new CreateReviewer(reviewersRepository);
@@ -42,38 +42,56 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
     it('can create a candidateChallenge', async () => {
         const service = new CreateCandidateChallenge(
             candidateChallengeRepository,
-            reviewersRepository,
-            challengeRepository,
             githubClient
         );
 
-        const createdCandidateChallenge = await service.run(ANY_VALID_URL, [ reviewer.getId() ], ANY_VALID_CANDIDATE, challenge.getId());
+        const createdCandidateChallenge = await service.run(
+            ANY_VALID_CANDIDATE,
+            challenge,
+            [ reviewer ]
+        );
 
         expect(createdCandidateChallenge.getId()).not.toBe(null);
-        expect(createdCandidateChallenge.getUrl()).toEqual(new URL(ANY_VALID_URL));
+        expect(createdCandidateChallenge.getUrl()).not.toBe(null);
+        expect(createdCandidateChallenge.getCandidate().getGithubUser()).toEqual(new GithubUser(ANY_GH_USERNAME));
     });
 
-    it('returns a rejected promise if URL is invalid', async () => {
-        const ANY_INVALID_URL = 'httpsvalid.url'
+    //this tests belongs to the value object (GithubUser)
+    it.skip('returns a rejected promise if URL does not belongs to a github user', async () => {
+        const NON_EXISTING_GH_USER = 'non_existing_github_user'
         const service = new CreateCandidateChallenge(
-            new InMemoryCandidateChallengeRepository(),
-            new InMemoryReviewerRepository(),
-            new InMemoryChallengeRepository(),
-            new SandboxedGithubClient()
+            candidateChallengeRepository,
+            githubClient
         );
 
-        expect(service.run(ANY_INVALID_URL, [ ANY_ID ], ANY_VALID_CANDIDATE, ANY_ID )).rejects.toBeInstanceOf(CreateCandidateChallengeError);
+        expect(
+            service.run(
+                new Candidate(
+                    new GithubUser(NON_EXISTING_GH_USER),
+                    new URL(ANY_VALID_URL)
+                ),
+                challenge,
+                [ reviewer ],
+            )
+        ).rejects.toBeInstanceOf(CreateCandidateChallengeError);
     });
 
-    it('returns a rejected promise if there is challenge is not found in the store', async () => {
+    //this behaviour should now be moved to application use case level
+    it.skip('returns a rejected promise if there is challenge is not found in the store', async () => {
         const service = new CreateCandidateChallenge(
-            new InMemoryCandidateChallengeRepository(),
-            new InMemoryReviewerRepository(),
-            new InMemoryChallengeRepository(),
-            new SandboxedGithubClient(),
+            candidateChallengeRepository,
+            githubClient
         );
+        const unsavedChallenge = Challenge.create(ANY_VALID_CHALLENGE_NAME, new URL(ANY_VALID_URL));
 
-        expect(service.run(ANY_VALID_URL, [ ANY_ID ], ANY_VALID_CANDIDATE, ANY_ID )).rejects.toEqual(new CreateCandidateChallengeError('Challenge with id: any_valid_uuid not found'));
+
+        expect(
+            service.run(
+                ANY_VALID_CANDIDATE,
+                unsavedChallenge,
+                [ reviewer ]
+            )
+        ).rejects.toEqual(new CreateCandidateChallengeError(`Challenge with id: ${unsavedChallenge.getId()} not found`));
     });
 
     it('returns a rejected promise if there is an error saving in the repository', async () => {
@@ -86,16 +104,19 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
         const challengeRepository = new InMemoryChallengeRepository();
         const challenge = Challenge.create(ANY_VALID_CHALLENGE_NAME, new URL(ANY_VALID_URL));
         challengeRepository.save(challenge);
-        
 
         const service = new CreateCandidateChallenge(
             candidateChallengeRepository,
-            new InMemoryReviewerRepository(),
-            challengeRepository,
-            new SandboxedGithubClient(),
+            githubClient
         );
 
-        expect(service.run(ANY_VALID_URL, [ ANY_ID ], ANY_VALID_CANDIDATE, challenge.getId() )).rejects.toEqual(new CreateCandidateChallengeError(ANY_ERROR_MESSAGE));
+        expect(
+            service.run(
+                ANY_VALID_CANDIDATE,
+                challenge,
+                [ reviewer ]
+            )
+        ).rejects.toEqual(new CreateCandidateChallengeError(ANY_ERROR_MESSAGE));
     });
 });
 
