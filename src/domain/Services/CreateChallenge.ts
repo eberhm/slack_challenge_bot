@@ -13,14 +13,14 @@ export class CreateChallenge {
       this.githubClient = githubClient;
     }
 
-    public async run(chanllengeUrl: string): Promise<Challenge> {
+    public async run(challengeName:string, chanllengeUrl: string): Promise<Challenge> {
       try {
         const url = new URL(chanllengeUrl);
         if (!await this.githubClient.githubRepositoryExists(url)) {
             throw new CreateChallengeError(`${chanllengeUrl} is not a valid Github Repository URL`);
         }
 
-        const challenge = Challenge.create(url);
+        const challenge = Challenge.create(challengeName, url);
 
         return await this.challengeRepository.save(challenge);
       } catch (e) {
