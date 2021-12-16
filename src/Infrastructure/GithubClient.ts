@@ -2,7 +2,6 @@ import { Challenge } from '../domain/Entities/Challenge';
 import { Reviewer } from '../domain/Entities/Reviewer';
 import { GithubClientInterface } from '../domain/Interfaces/GithubClientInterface';
 import { Candidate } from '../domain/ValueObjects/Candidate';
-import { GithubCodeChallenge } from '../domain/ValueObjects/GithubCodeChallenge';
 import { Octokit } from 'octokit';
 
 export class GithubClientError extends Error {};
@@ -24,8 +23,8 @@ export class GithubClient implements GithubClientInterface {
         }
     }
 
-    async addReviewersToCodeChallenge(ghCodeChallenge: GithubCodeChallenge, reviewers: Reviewer[]): Promise<GithubCodeChallenge> {
-        throw new Error('not implemented');
+    async addReviewersToCodeChallenge(candidateChallengeUrl: URL, reviewers: Reviewer[]): Promise<void> {
+        throw new Error('Method not implemented.');
     }
 
     private parseOwnerAndRepo(url: URL): { owner: string, repo: string } {

@@ -19,22 +19,22 @@ describe('CandidateChanllenge Entity', () => {
         );
 
         expect(challenge.getId()).not.toBe(null);
-        expect(challenge.getUrl()).toBe(ANY_URL);
+        expect(challenge.getCandidateChallengeUrl()).toBe(ANY_URL);
         expect(challenge.getReviewerIds()).toEqual([ ANY_ID ]);
         expect(challenge.getChallengeId()).toBe(ANY_ID);
         expect(challenge.getCandidate()).toBe(candidate);
     });
 
-    it('Cannot be created having an empty reviewers state', () => {
+    it('Can be created having an empty reviewers state', () => {
         const emptyReviewers: Array<Identifier> = [];
 
-        expect(() => {
-            const challenge = CandidateChallenge.create(
-                ANY_URL,
-                Candidate.create(ANY_VALID_GH_USERNAME, ANY_URL),
-                emptyReviewers,
-                ANY_ID
-            );
-        }).toThrowError(EmptyReviewersError);
+        const challenge = CandidateChallenge.create(
+            ANY_URL,
+            Candidate.create(ANY_VALID_GH_USERNAME, ANY_URL),
+            emptyReviewers,
+            ANY_ID
+        );
+
+        expect(challenge.getReviewerIds()).toEqual([]);
     });
 });
