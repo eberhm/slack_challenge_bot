@@ -13,7 +13,7 @@ import { Candidate } from '../../../src/domain/ValueObjects/Candidate';
 import { InMemoryCandidateChallengeRepository } from '../../Infrastructure/Repositories/InMemoryCandidateChallengeRepository';
 import { InMemoryChallengeRepository } from '../../Infrastructure/Repositories/InMemoryChallengeRepository';
 import { InMemoryReviewerRepository } from '../../Infrastructure/Repositories/InMemoryReviewerRepository';
-import { SandboxedGithubClient } from '../../Infrastructure/Repositories/SandboxedGithubClient';
+import { SandboxedGithubClient, CHALLENGE_FOR_CANDIDATE_REPO_URL } from '../../Infrastructure/Repositories/SandboxedGithubClient';
 
 describe('CreateCandidateChallenge Service creates a challenge and returns it newly inserted in the DB', () => {
 
@@ -36,22 +36,22 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
 
     beforeEach(setUp)
 
-    it.only('can create a candidateChallenge', async () => {
-        const createdCandidateChallenge = await service.run(ANY_VALID_URL, [ reviewer.getId() ], ANY_VALID_CANDIDATE, challenge.getId());
+    it('can create a candidateChallenge', async () => {
+        const createdCandidateChallenge = await service.run(ANY_VALID_CANDIDATE, challenge.getId());
 
         expect(createdCandidateChallenge.getId()).not.toBe(null);
-        expect(createdCandidateChallenge.getUrl()).toEqual(new URL(ANY_VALID_URL));
+        expect(createdCandidateChallenge.getUrl()).toEqual(new URL(CHALLENGE_FOR_CANDIDATE_REPO_URL));
     });
 
     it('returns a rejected promise if URL is invalid', async () => {
         const ANY_INVALID_URL = 'httpsvalid.url'
 
-        expect(service.run(ANY_INVALID_URL, [ ANY_ID ], ANY_VALID_CANDIDATE, ANY_ID )).rejects.toBeInstanceOf(CreateCandidateChallengeError);
+        expect(service.run(ANY_VALID_CANDIDATE, ANY_ID )).rejects.toBeInstanceOf(CreateCandidateChallengeError);
     });
 
     it('returns a rejected promise if there is challenge is not found in the store', async () => {
 
-        expect(service.run(ANY_VALID_URL, [ ANY_ID ], ANY_VALID_CANDIDATE, ANY_ID )).rejects.toEqual(new CreateCandidateChallengeError('Challenge with id: any_valid_uuid not found'));
+        expect(service.run(ANY_VALID_CANDIDATE, ANY_ID )).rejects.toEqual(new CreateCandidateChallengeError('Challenge with id: any_valid_uuid not found'));
     });
 
     it('returns a rejected promise if there is an error saving in the repository', async () => {
@@ -63,7 +63,7 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
         const challenge = Challenge.create(ANY_VALID_CHALLENGE_NAME, new URL(ANY_VALID_URL));
         challengeRepository.save(challenge);
 
-        expect(service.run(ANY_VALID_URL, [ ANY_ID ], ANY_VALID_CANDIDATE, challenge.getId() )).rejects.toEqual(new CreateCandidateChallengeError(ANY_ERROR_MESSAGE));
+        expect(service.run(ANY_VALID_CANDIDATE, challenge.getId() )).rejects.toEqual(new CreateCandidateChallengeError(ANY_ERROR_MESSAGE));
     });
 
     async function setUp() {
@@ -81,10 +81,8 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
 
         service = new CreateCandidateChallenge(
             candidateChallengeRepository,
-            reviewersRepository,
             challengeRepository,
-            createGithubChallengeService,
-            githubClient
+            createGithubChallengeService
         );
     }
 });

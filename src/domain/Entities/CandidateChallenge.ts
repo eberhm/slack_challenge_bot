@@ -31,9 +31,6 @@ export class CandidateChallenge {
       reviewerIds: Array<Identifier>,
       challengeId: Identifier,
     ) {
-      if (reviewerIds.length === 0) {
-        throw new EmptyReviewersError('The reviewers list is empty');
-      }
       this.id = id;
       this.githubRepositoryUrl = url;
       this.reviewerIds = reviewerIds;
