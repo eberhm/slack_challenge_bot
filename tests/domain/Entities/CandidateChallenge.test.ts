@@ -19,7 +19,7 @@ describe('CandidateChanllenge Entity', () => {
         );
 
         expect(challenge.getId()).not.toBe(null);
-        expect(challenge.getUrl()).toBe(ANY_URL);
+        expect(challenge.getCandidateChallengeUrl()).toBe(ANY_URL);
         expect(challenge.getReviewerIds()).toEqual([ ANY_ID ]);
         expect(challenge.getChallengeId()).toBe(ANY_ID);
         expect(challenge.getCandidate()).toBe(candidate);

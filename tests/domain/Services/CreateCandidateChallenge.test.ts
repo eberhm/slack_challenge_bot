@@ -7,7 +7,6 @@ import { GithubClientInterface } from '../../../src/domain/Interfaces/GithubClie
 import { ReviewerRepository } from '../../../src/domain/Interfaces/ReviewerRepository';
 import { CreateCandidateChallenge, CreateCandidateChallengeError } from '../../../src/domain/Services/CreateCandidateChallenge';
 import { CreateChallenge } from '../../../src/domain/Services/CreateChallenge';
-import { CreateGithubChallenge } from '../../../src/domain/Services/CreateGithubChallenge';
 import { CreateReviewer } from '../../../src/domain/Services/CreateReviewer';
 import { Candidate } from '../../../src/domain/ValueObjects/Candidate';
 import { InMemoryCandidateChallengeRepository } from '../../Infrastructure/Repositories/InMemoryCandidateChallengeRepository';
@@ -15,7 +14,7 @@ import { InMemoryChallengeRepository } from '../../Infrastructure/Repositories/I
 import { InMemoryReviewerRepository } from '../../Infrastructure/Repositories/InMemoryReviewerRepository';
 import { SandboxedGithubClient, CHALLENGE_FOR_CANDIDATE_REPO_URL } from '../../Infrastructure/Repositories/SandboxedGithubClient';
 
-describe('CreateCandidateChallenge Service creates a challenge and returns it newly inserted in the DB', () => {
+describe('CreateCandidateChallenge Service', () => {
 
     const ANY_ID = 'any_valid_uuid';
     const ANY_VALID_URL = 'https://valid.url'
@@ -28,7 +27,6 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
         candidateChallengeRepository: CandidateChallengeRepository,
         challengeRepository: ChallengeRepository,
         githubClient: GithubClientInterface,
-        createGithubChallengeService: CreateGithubChallenge,
         service: CreateCandidateChallenge,
         reviewer: Reviewer,
         challenge: Challenge
@@ -40,7 +38,7 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
         const createdCandidateChallenge = await service.run(ANY_VALID_CANDIDATE, challenge.getId());
 
         expect(createdCandidateChallenge.getId()).not.toBe(null);
-        expect(createdCandidateChallenge.getUrl()).toEqual(new URL(CHALLENGE_FOR_CANDIDATE_REPO_URL));
+        expect(createdCandidateChallenge.getCandidateChallengeUrl()).toEqual(new URL(CHALLENGE_FOR_CANDIDATE_REPO_URL));
     });
 
     it('returns a rejected promise if URL is invalid', async () => {
@@ -52,6 +50,13 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
     it('returns a rejected promise if there is challenge is not found in the store', async () => {
 
         expect(service.run(ANY_VALID_CANDIDATE, ANY_ID )).rejects.toEqual(new CreateCandidateChallengeError('Challenge with id: any_valid_uuid not found'));
+    });
+
+    it('fails when the githubClient fails', async () => {
+        const CLIENT_ERROR_MESSAGE = 'Error in GHClient';
+        githubClient.createChallengeForCandidate = jest.fn().mockRejectedValue(new Error(CLIENT_ERROR_MESSAGE));
+
+        expect(service.run(ANY_VALID_CANDIDATE, challenge.getId() )).rejects.toEqual(new CreateCandidateChallengeError(CLIENT_ERROR_MESSAGE));
     });
 
     it('returns a rejected promise if there is an error saving in the repository', async () => {
@@ -71,7 +76,6 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
         candidateChallengeRepository = new InMemoryCandidateChallengeRepository();
         challengeRepository = new InMemoryChallengeRepository();
         githubClient = new SandboxedGithubClient();
-        createGithubChallengeService = new CreateGithubChallenge(githubClient);
 
         const createReviewerService = new CreateReviewer(reviewersRepository);
         reviewer = await createReviewerService.run(ANY_GH_USERNAME, ANY_SLACK_ID);
@@ -82,7 +86,7 @@ describe('CreateCandidateChallenge Service creates a challenge and returns it ne
         service = new CreateCandidateChallenge(
             candidateChallengeRepository,
             challengeRepository,
-            createGithubChallengeService
+            githubClient
         );
     }
 });

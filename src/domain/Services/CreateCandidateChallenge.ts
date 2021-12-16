@@ -3,8 +3,7 @@ import { Identifier } from '../ValueObjects/Identifier';
 import { CandidateChallengeRepository } from '../Interfaces/CandidateChallengeRepository';
 import { Candidate } from '../ValueObjects/Candidate';
 import { ChallengeRepository } from '../Interfaces/ChallengeRepository';
-import { GithubCodeChallenge } from '../ValueObjects/GithubCodeChallenge';
-import { CreateGithubChallenge } from './CreateGithubChallenge';
+import { GithubClientInterface } from '../Interfaces/GithubClientInterface';
 
 export class CreateCandidateChallengeError extends Error {}
 
@@ -12,16 +11,16 @@ export class CreateCandidateChallenge {
 
     private candidateChallengeRepository: CandidateChallengeRepository;
     private challengesRepository: ChallengeRepository;
-    private createGithubChallengeService: CreateGithubChallenge;
+    private githubClient: GithubClientInterface;
 
     public constructor(
       candidateChallengeRepository: CandidateChallengeRepository,
       challengesRepository: ChallengeRepository,
-      createGithubChallengeService: CreateGithubChallenge
+      githubClient: GithubClientInterface
     ) {
       this.candidateChallengeRepository = candidateChallengeRepository;
       this.challengesRepository = challengesRepository;
-      this.createGithubChallengeService = createGithubChallengeService;
+      this.githubClient = githubClient;
     }
 
     public async run(
@@ -31,9 +30,9 @@ export class CreateCandidateChallenge {
       try {
         const challenge = await this.challengesRepository.findById(challengeId);
 
-        let ghCodeChallenge: GithubCodeChallenge;
+        let ghCodeChallenge: URL;
         if (challenge) {
-          ghCodeChallenge = await this.createGithubChallengeService.run(
+          ghCodeChallenge = await this.githubClient.createChallengeForCandidate(
             challenge,
             candidate,
           );
@@ -42,7 +41,7 @@ export class CreateCandidateChallenge {
         }
 
         const candidateChallenge = CandidateChallenge.create(
-          ghCodeChallenge.getUrl(),
+          ghCodeChallenge,
           candidate,
           [],
           challengeId,
