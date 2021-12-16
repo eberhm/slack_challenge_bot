@@ -6,8 +6,7 @@ describe('Candidate Entity', () => {
     it('Has a valid state defined', () => {
         const VALID_USERNAME = 'valid.username';
         const ANY_URL = new URL('https://any.url.com');
-        const githubUser = new GithubUser(VALID_USERNAME);
-        const candidate = new Candidate(githubUser, ANY_URL);
+        const candidate = Candidate.create(VALID_USERNAME, ANY_URL);
 
         expect(candidate.getGithubUser().getUsername()).toBe(VALID_USERNAME);
         expect(candidate.getResumeUrl()).toBe(ANY_URL);

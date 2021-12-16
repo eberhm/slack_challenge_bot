@@ -13,7 +13,6 @@ Cosas que hay que repensarse:
 export class InMemoryReviewerRepository implements ReviewerRepository {
     public storage: Map<Identifier, Reviewer> = new Map();
 
-    
     public save(reviewer: Reviewer): Promise<Reviewer> {
         try {
             this.storage.set(reviewer.getId(), reviewer);

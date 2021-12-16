@@ -1,14 +1,14 @@
 import { Challenge } from '../Entities/Challenge';
 import { ChallengeRepository } from '../Interfaces/ChallengeRepository';
-import { GithubClient } from '../Interfaces/GithubClient';
+import { GithubClientInterface } from '../Interfaces/GithubClientInterface';
 
 export class CreateChallengeError extends Error {}
 
 export class CreateChallenge {
     private challengeRepository: ChallengeRepository;
-    private githubClient: GithubClient;
+    private githubClient: GithubClientInterface;
 
-    public constructor(challengeRepository: ChallengeRepository, githubClient: GithubClient) {
+    public constructor(challengeRepository: ChallengeRepository, githubClient: GithubClientInterface) {
       this.challengeRepository = challengeRepository;
       this.githubClient = githubClient;
     }
