@@ -1,7 +1,7 @@
 import { generateUuid, Identifier } from '../ValueObjects/Identifier';
 import { Candidate } from '../ValueObjects/Candidate';
 
-export class EmptyReviewersSetError extends Error {}
+export class EmptyReviewersError extends Error {}
 
 export class CandidateChallenge {
     private id: Identifier;
@@ -32,7 +32,7 @@ export class CandidateChallenge {
       challengeId: Identifier,
     ) {
       if (reviewerIds.length === 0) {
-        throw new EmptyReviewersSetError('The reviewers list is empty');
+        throw new EmptyReviewersError('The reviewers list is empty');
       }
       this.id = id;
       this.githubRepositoryUrl = url;

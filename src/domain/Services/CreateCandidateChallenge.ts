@@ -5,28 +5,30 @@ import { Candidate } from '../ValueObjects/Candidate';
 import { ReviewerRepository } from '../Interfaces/ReviewerRepository';
 import { ChallengeRepository } from '../Interfaces/ChallengeRepository';
 import { GithubCodeChallenge } from '../ValueObjects/GithubCodeChallenge';
-import { GithubClient } from '../Interfaces/GithubClient';
+import { GithubClientInterface } from '../Interfaces/GithubClientInterface';
+import { CreateGithubChallenge } from './CreateGithubChallenge';
 
 export class CreateCandidateChallengeError extends Error {}
 
 export class CreateCandidateChallenge {
+
     private candidateChallengeRepository: CandidateChallengeRepository;
-
     private reviewersRepository: ReviewerRepository;
-
     private challengesRepository: ChallengeRepository;
-
-    private githubClient: GithubClient;
+    private githubClient: GithubClientInterface;
+    private createGithubChallenge: CreateGithubChallenge;
 
     public constructor(
       candidateChallengeRepository: CandidateChallengeRepository,
       reviewersRepository: ReviewerRepository,
       challengesRepository: ChallengeRepository,
-      githubClient: GithubClient,
+      createGithubChallenge: CreateGithubChallenge,
+      githubClient: GithubClientInterface
     ) {
       this.candidateChallengeRepository = candidateChallengeRepository;
       this.reviewersRepository = reviewersRepository;
       this.challengesRepository = challengesRepository;
+      this.createGithubChallenge = createGithubChallenge;
       this.githubClient = githubClient;
     }
 
@@ -46,7 +48,7 @@ export class CreateCandidateChallenge {
 
         let ghCodeChallenge: GithubCodeChallenge;
         if (challenge) {
-          ghCodeChallenge = await this.githubClient.createChallengeForCandidate(
+          ghCodeChallenge = await this.createGithubChallenge.run(
             challenge,
             candidate,
           );
@@ -54,7 +56,6 @@ export class CreateCandidateChallenge {
           throw new CreateCandidateChallengeError(`Challenge with id: ${challengeId} not found`);
         }
 
-        await this.githubClient.createChallengeForCandidate(challenge, candidate);
         await this.githubClient.addReviewersToCodeChallenge(ghCodeChallenge, reviewers);
 
         const candidateChallenge = CandidateChallenge.create(

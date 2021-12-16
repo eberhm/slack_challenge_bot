@@ -5,7 +5,11 @@ export class Candidate {
 
     private resumeUrl: URL;
 
-    constructor(githubUser: GithubUser, resumeUrl: URL) {
+    static create(githubUsername: string, resumeUrl: URL) {
+      return new this(new GithubUser(githubUsername), resumeUrl);
+    }
+    
+    private constructor(githubUser: GithubUser, resumeUrl: URL) {
       this.githubUser = githubUser;
       this.resumeUrl = resumeUrl;
     }
