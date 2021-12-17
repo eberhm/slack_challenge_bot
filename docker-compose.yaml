@@ -1,0 +1,31 @@
+version: '3'
+services: 
+  db:
+    image: mysql:latest
+    restart: always
+    env_file: ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: $SLACK_CC_MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $SLACK_CC_MYSQL_DATABASE
+    ports:
+      - $SLACK_CC_MYSQL_LOCAL_PORT:$SLACK_CC_MYSQL_DOCKER_PORT
+    volumes: 
+      - db-config:/etc/mysql
+      - db-data:/var/lib/mysql
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    image: "eberhm/slack_gh_code_challenge_app:latest"
+    ports:
+      - $SLACK_CC_NODE_LOCAL_PORT:$SLACK_CC_NODE_DOCKER_PORT
+    env_file:
+      - ./.env
+    volumes: 
+      - ./:/app
+      - ./node_modules:/app/node_modules
+    depends_on:
+      - db
+volumes: 
+  db-config:
+  db-data:

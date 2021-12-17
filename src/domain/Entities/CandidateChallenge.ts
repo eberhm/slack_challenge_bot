@@ -20,16 +20,12 @@ export class CandidateChallenge {
       reviewerIds: Array<Identifier>,
       challengeId: Identifier,
     ) {
-      const id = generateUuid('CandidateChallenge');
-      return new this(id, url, candidate, reviewerIds, challengeId);
+      const id = generateUuid();
+      return new this({ id, candidateChallengeUrl: url, candidate, reviewerIds, challengeId });
     }
 
-    private constructor(
-      id: Identifier,
-      candidateChallengeUrl: URL,
-      candidate: Candidate,
-      reviewerIds: Array<Identifier>,
-      challengeId: Identifier,
+    constructor(
+{ id, candidateChallengeUrl, candidate, reviewerIds, challengeId }: { id: Identifier; candidateChallengeUrl: URL; candidate: Candidate; reviewerIds: Array<Identifier>; challengeId: Identifier; },
     ) {
       this.id = id;
       this.candidateChallengeUrl = candidateChallengeUrl;

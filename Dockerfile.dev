@@ -1,0 +1,8 @@
+FROM node:14.18.2-stretch
+# change to node:14
+
+WORKDIR /app
+
+RUN npm install
+
+CMD ["npm", "run", "test:watch"]
