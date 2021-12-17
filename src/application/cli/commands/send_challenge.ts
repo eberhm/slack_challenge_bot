@@ -1,6 +1,8 @@
 import type { Arguments, CommandBuilder } from 'yargs';
 import { InMemoryCandidateChallengeRepository } from '../../../../tests/Infrastructure/Repositories/InMemoryCandidateChallengeRepository';
 import { InMemoryChallengeRepository } from '../../../../tests/Infrastructure/Repositories/InMemoryChallengeRepository';
+import { InMemoryReviewerRepository } from '../../../../tests/Infrastructure/Repositories/InMemoryReviewerRepository';
+import { AddReviewersToCodeChallenge } from '../../../domain/Services/AddReviewersToCodeChallenge';
 import { CreateCandidateChallenge } from '../../../domain/Services/CreateCandidateChallenge';
 import { Candidate } from '../../../domain/ValueObjects/Candidate';
 import { GithubClient } from '../../../Infrastructure/GithubClient';
@@ -35,10 +37,20 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
   try {
 
     const challengeRepository = new InMemoryChallengeRepository();
-    const service = new CreateCandidateChallenge(
-      new InMemoryCandidateChallengeRepository(),
+    const githubClient = new GithubClient();
+    const candidateChallengeRepository = new InMemoryCandidateChallengeRepository();
+    const reviewersRepository = new InMemoryReviewerRepository();
+
+    const createCandidateChallengeService = new CreateCandidateChallenge(
+      candidateChallengeRepository,
       challengeRepository,
-      new GithubClient()
+      githubClient
+    );
+
+    const addReviewersToChallengeService = new AddReviewersToCodeChallenge(
+      candidateChallengeRepository,
+      reviewersRepository,
+      githubClient
     );
 
     const candidate = Candidate.create(githubUser, new URL(resumeUrl));
@@ -48,13 +60,17 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
       throw new Error(`Challenge with name: ${challengeName} not found!`);
     }
 
-    const candidateChallenge = await service.run(candidate, challenge.getId());
+    const candidateChallenge = await createCandidateChallengeService.run(candidate, challenge.getId());
 
     process.stdout.write(`Candidate Challenge created with id ${candidateChallenge.getId()}`);
     
     //adding now the reviewers
 
-    
+    await addReviewersToChallengeService.run(candidateChallenge, [ reviewer1, reviewer2 ]);
+
+    process.stdout.write(`Reviewers added to Candidate Challenge with id ${candidateChallenge.getId()}`);
+    process.stdout.write(`Reviewers: ${reviewer1}, ${reviewer2}`);
+
     process.exit(0);
   } catch(e) {
     process.stderr.write(`Error creating candidate challenge: ${e.message}`);
