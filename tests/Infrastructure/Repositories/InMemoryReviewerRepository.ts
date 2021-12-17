@@ -1,15 +1,6 @@
 import { Reviewer } from "../../../src/domain/Entities/Reviewer";
 import { Identifier } from "../../../src/domain/ValueObjects/Identifier";
 import { ReviewerRepository } from "../../../src/domain/Interfaces/ReviewerRepository";
-
-/*
-Cosas que hay que repensarse:
-
-* El uso de Identofier tan complejo y devolver en los getId() solo el Id.value
-* El uso de Map en los InMemoryRepository...no acaba de funcionar
-* El uso de InMemoryRepository en si...no es mejor simplemente usar mocks puros?
-
-*/
 export class InMemoryReviewerRepository implements ReviewerRepository {
     public storage: Map<Identifier, Reviewer> = new Map();
 
@@ -22,11 +13,24 @@ export class InMemoryReviewerRepository implements ReviewerRepository {
 
         return Promise.resolve(reviewer);
     }
-    
-    
-    public findByIds(ids: Array<Identifier>): Promise<Reviewer[]> {
-        return Promise.resolve(ids.map((id) => {
-            return this.storage.get(id);
-        }));
+
+    /*
+    * Usage of .map and .filter over the Array would been cleaner but we need to 
+    * separate result type from direct .map or .filter results as they are T | undefined 
+    * in order to help Typescript to understand the correct type (as we use strictNullChecks). 
+    */
+    public findByIds(ids: Array<Identifier>): Promise<Reviewer[] | undefined > {
+        const reviewers: Reviewer[] = [];
+        ids.forEach((id) => {
+            if (this.storage.has(id)) {
+                reviewers.push(this.storage.get(id) as Reviewer);
+            }
+        });
+
+        if (reviewers.length <= 0) {
+            return Promise.resolve(undefined);
+        } else {
+            return Promise.resolve(reviewers);
+        }
     }
 }

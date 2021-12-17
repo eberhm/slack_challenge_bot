@@ -30,6 +30,10 @@ export class AddReviewersToCodeChallenge {
 
         const reviewers = await this.reviewersRepository.findByIds(reviewerIds);
 
+        if (!Array.isArray(reviewers)) {
+          throw new Error(`Reviewers not found: ${reviewerIds.concat(', ') }`);
+        }
+
         await this.githubClient.addReviewersToCodeChallenge(candidateChallenge.getCandidateChallengeUrl(), reviewers);
 
         return this.candidateChallengeRepository.addReviewers(candidateChallenge, reviewers);

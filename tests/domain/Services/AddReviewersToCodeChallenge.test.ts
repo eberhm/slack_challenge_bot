@@ -49,12 +49,19 @@ describe('AddReviewersToCodeChallenge Service', () => {
         expect(service.run(candidateChallenge, reviewerIds)).rejects.toEqual(new AddReviewersToCodeChallengeError(CLIENT_ERROR_MESSAGE));
     });
 
-    it('returns a rejected promise if there is an error saving in the repository', async () => {
+    it('fails if there is an error saving in the repository', async () => {
         const REPO_FAILURE_MESSAGE = 'error saving into repository';
 
         candidateChallengeRepository.addReviewers = jest.fn().mockRejectedValue(new Error(REPO_FAILURE_MESSAGE));
 
         expect(service.run(candidateChallenge, reviewerIds)).rejects.toEqual(new AddReviewersToCodeChallengeError(REPO_FAILURE_MESSAGE));
+    });
+
+    it('fails if all reviewers are not found in the reviewers repository', async () => {
+        const NON_EXISTING_REVIEWER_IDS = [ 'any_non_existing_identifier', 'yet_another_existing_identifier'];
+        const REPO_FAILURE_MESSAGE = `Reviewers not found: ${NON_EXISTING_REVIEWER_IDS.concat(', ') }`;
+
+        expect(service.run(candidateChallenge, NON_EXISTING_REVIEWER_IDS)).rejects.toEqual(new AddReviewersToCodeChallengeError(REPO_FAILURE_MESSAGE));
     });
 
     async function setUp() {
