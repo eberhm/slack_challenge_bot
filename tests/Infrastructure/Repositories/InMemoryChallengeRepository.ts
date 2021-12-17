@@ -15,12 +15,12 @@ export class InMemoryChallengeRepository implements ChallengeRepository {
         return Promise.resolve(challenge);
     }
 
-    public findById(id: Identifier): Promise<Challenge> {
+    public findById(id: Identifier): Promise<Challenge | undefined> {
         return Promise.resolve(this.storage.get(id));
     }
 
-    public findByName(name: string): Promise<Challenge> {
-        let found: Challenge;
+    public findByName(name: string): Promise<Challenge | undefined> {
+        let found: Challenge | undefined;
 
         this.storage.forEach((challenge) => {
             if (challenge.getName() === name) {
