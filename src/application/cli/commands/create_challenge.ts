@@ -21,14 +21,6 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
   const { challengeName, repositoryName }: Options = argv;
 
   try {
-    if (!repositoryName) {
-      throw new Error("repositoryName not found");
-    }
-
-    if (!challengeName) {
-      throw new Error("challengeName not found");
-    }
-
     const service = new CreateChallenge(
       new InMemoryChallengeRepository(),
       new GithubClient()
