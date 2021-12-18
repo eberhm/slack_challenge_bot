@@ -34,5 +34,6 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
     process.exit(0);
   } catch(e) {
     process.stderr.write(`Error creating challenge ${repositoryName}: ${e.message}`);
+    process.exit(1);
   }
 };
