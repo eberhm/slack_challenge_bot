@@ -1,5 +1,5 @@
 #!/usr/bin/env ts-node
-
+import "reflect-metadata";
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { config } from 'dotenv';

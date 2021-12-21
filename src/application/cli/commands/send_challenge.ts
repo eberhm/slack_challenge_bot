@@ -1,7 +1,7 @@
 import type { Arguments, CommandBuilder } from 'yargs';
-import { InMemoryCandidateChallengeRepository } from '../../../../tests/Infrastructure/Repositories/InMemoryCandidateChallengeRepository';
-import { InMemoryChallengeRepository } from '../../../../tests/Infrastructure/Repositories/InMemoryChallengeRepository';
-import { InMemoryReviewerRepository } from '../../../../tests/Infrastructure/Repositories/InMemoryReviewerRepository';
+import { CandidateChallengeRepository } from '../../../Infrastructure/CandidateChallengeRepository';
+import { ChallengeRepository } from '../../../Infrastructure/ChallengeRepository';
+import { ReviewerRepository } from '../../../Infrastructure/ReviewerRepository';
 import { AddReviewersToCodeChallenge } from '../../../domain/Services/AddReviewersToCodeChallenge';
 import { CreateCandidateChallenge } from '../../../domain/Services/CreateCandidateChallenge';
 import { Candidate } from '../../../domain/ValueObjects/Candidate';
@@ -36,10 +36,10 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
 
   try {
 
-    const challengeRepository = new InMemoryChallengeRepository();
+    const challengeRepository = new ChallengeRepository();
     const githubClient = new GithubClient();
-    const candidateChallengeRepository = new InMemoryCandidateChallengeRepository();
-    const reviewersRepository = new InMemoryReviewerRepository();
+    const candidateChallengeRepository = new CandidateChallengeRepository();
+    const reviewersRepository = new ReviewerRepository();
 
     const createCandidateChallengeService = new CreateCandidateChallenge(
       candidateChallengeRepository,
@@ -74,5 +74,6 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
     process.exit(0);
   } catch(e) {
     process.stderr.write(`Error creating candidate challenge: ${e.message}`);
+    process.exit(1);
   }
 };

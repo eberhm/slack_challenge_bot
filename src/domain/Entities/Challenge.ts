@@ -6,11 +6,11 @@ export class Challenge {
     private githubRepositoryUrl: URL;
 
     static create(name:string, url: URL) {
-      const id = generateUuid('Challenge');
+      const id = generateUuid();
       return new this(id, name, url);
     }
 
-    private constructor(id: Identifier, name: string, url: URL) {
+    constructor(id: Identifier, name: string, url: URL) {
       this.id = id;
       this.name = name;
       this.githubRepositoryUrl = url;

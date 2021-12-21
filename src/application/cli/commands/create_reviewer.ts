@@ -1,5 +1,5 @@
 import type { Arguments, CommandBuilder } from 'yargs';
-import { InMemoryReviewerRepository } from '../../../../tests/Infrastructure/Repositories/InMemoryReviewerRepository';
+import { ReviewerRepository } from '../../../Infrastructure/ReviewerRepository';
 import { CreateReviewer } from '../../../domain/Services/CreateReviewer';
 
 type Options = {
@@ -12,6 +12,9 @@ export const desc: string = 'Creates a reviewer establishing the relation betwee
 
 export const builder: CommandBuilder<Options, Options> = (yargs) =>
   yargs
+  .parserConfiguration({
+    "dot-notation": false
+  })
   .positional('slackId', { type: 'string', demandOption: true })
   .positional('githubHandler', { type: 'string', demandOption: true });
     
@@ -21,7 +24,7 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
 
   try {
     const service = new CreateReviewer(
-      new InMemoryReviewerRepository()
+      new ReviewerRepository()
     );
 
     await service.run(githubUsername, slackId);
@@ -29,5 +32,6 @@ export const handler = async (argv: Arguments<Options>): Promise<void> => {
     process.exit(0);
   } catch(e) {
     process.stderr.write(`Error creating Reviewer: ${e.message}. SlackId: ${slackId}, githubUsername: ${githubUsername}`);
+    process.exit(1);
   }
 };

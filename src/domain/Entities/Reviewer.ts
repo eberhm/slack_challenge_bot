@@ -10,11 +10,11 @@ export class Reviewer {
     private slackUser: SlackUser;
 
     static create(githubUser: GithubUser, slackUser: SlackUser) {
-      const id = generateUuid('Reviewer');
+      const id = generateUuid();
       return new this(id, githubUser, slackUser);
     }
 
-    private constructor(id: Identifier, githubUser: GithubUser, slackUser: SlackUser) {
+    constructor(id: Identifier, githubUser: GithubUser, slackUser: SlackUser) {
       this.id = id;
       this.githubUser = githubUser;
       this.slackUser = slackUser;

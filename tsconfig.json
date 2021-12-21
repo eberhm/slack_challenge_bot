@@ -7,6 +7,8 @@
       "declaration": true,
       "declarationMap": true,
       "inlineSourceMap": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
       "rootDir": "./",
       "outDir": "./dist/main",
       "baseUrl": ".",
