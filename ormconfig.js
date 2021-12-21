@@ -1,10 +1,12 @@
+require('dotenv').config()
+
 module.exports = {
     "type": "mysql",
-    "host": "0.0.0.0",
-    "port": 3306,
+    "host": process.env.SLACK_CC_MYSQL_DATABASE_HOST,
+    "port": process.env.SLACK_CC_MYSQL_LOCAL_PORT,
     "username": "root",
-    "password": "root",
-    "database": "example_db",
+    "password": process.env.SLACK_CC_MYSQL_ROOT_PASSWORD,
+    "database": process.env.SLACK_CC_MYSQL_DATABASE,
     "synchronize": true,
     "logging": false,
     "entities": [
