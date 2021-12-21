@@ -48,7 +48,8 @@
     "lint-fix": "eslint --fix src/**/*.ts",
     "pretty": "prettier --write 'src/**/*.ts'",
     "prepare": "husky install",
-    "precommit": "npm run lint-fix && npm run pretty && npm run test"
+    "precommit": "npm run lint-fix && npm run pretty && npm run test",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js"
   },
   "license": "ISC"
 }

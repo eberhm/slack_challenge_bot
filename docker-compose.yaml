@@ -4,9 +4,6 @@ services:
     image: mysql:latest
     restart: always
     env_file: ./.env
-    environment:
-      MYSQL_ROOT_PASSWORD: $SLACK_CC_MYSQL_ROOT_PASSWORD
-      MYSQL_DATABASE: $SLACK_CC_MYSQL_DATABASE
     ports:
       - $SLACK_CC_MYSQL_LOCAL_PORT:$SLACK_CC_MYSQL_DOCKER_PORT
     volumes: 
