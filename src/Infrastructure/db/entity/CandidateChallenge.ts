@@ -12,10 +12,14 @@ export class CandidateChallenge {
     @Column()
     candidateChallengeUrl: string;
 
-    @Column()
+    @Column({
+        nullable: true,
+    })
     reviewerId1: Identifier;
 
-    @Column()
+    @Column({
+        nullable: true,
+    })
     reviewerId2: Identifier;
 
     @Column()

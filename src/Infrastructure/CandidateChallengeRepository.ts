@@ -17,19 +17,19 @@ export class CandidateChallengeRepository implements CandidateChallengeRepositor
         return this.save(candidateChallenge);
     }
 
-    async save(challenge: CandidateChallenge): Promise<CandidateChallenge> {
+    async save(candidateChallenge: CandidateChallenge): Promise<CandidateChallenge> {
         try {
             await this.getOrmRepository()
                 .then(
                     repository => repository.save(
-                        mapToOrm(challenge)
+                        mapToOrm(candidateChallenge)
                     )
                 );
         } catch (e) {
             throw new Error(`Error saving CandidateChallenge to DB: ${e.message}`);
         }
         
-        return challenge;
+        return candidateChallenge;
     }
 
     private async getOrmRepository() {
