@@ -34,23 +34,20 @@ For developing a new feature you must create a branch or a fork and propose a pu
 It is highly recommended that, while you're developing, you have your tests running in `watch mode``
 
 ```
-make tests:watch
+make test-watch
 ```
 
 ## Changing DB schema
 
-This application uses TypeORM. You have available all typeorm cli commands by running:
-
-```
-make typeorm <command>
-```
-
 When you need to change the schema. You just need to change/add the entity in ./src/Infrastucture/db/entity and run
 
 ```
-make migration:generate -n <my_migration_name>
+make db-migration-generate migrationName=<my_migration_name>
 ```
 
-This will create a migration and run it in your local DB unless --dry-run is passed as flag
+When you need to run the migration run: 
 
+```
+make db-migrate
+```
 

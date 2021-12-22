@@ -1,10 +1,12 @@
 # Pending tasks
-- ~~Create ormconfig.js to depend on env vars~~
-- ~~server container does not work to use typeorm commands~~
-- ~~script in package.json to run typeorm~~
-- ~~implement missing methods in GithubClient (explore use of templates)~~
-- Slack integration
-- Infrastructure folder tests (EoE ???)
+- ~~1 Create ormconfig.js to depend on env vars~~
+- ~~2 server container does not work to use typeorm commands~~
+- ~~3 script in package.json to run typeorm~~
+- ~~4 implement missing methods in GithubClient (explore use of templates)~~
+- 5 Dev console (Makefile)
+- 6 Slack integration
+- 7 Github account registration
+- 8 Infrastructure folder tests (EoE ???)
 
 # Future features
-- MultiGH account installation?
+- MultiGH account installation? (Maybe this is already covered in 7)

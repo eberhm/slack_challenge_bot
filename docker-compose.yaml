@@ -9,7 +9,7 @@ services:
     volumes: 
       - db-config:/etc/mysql
       - db-data:/var/lib/mysql
-  server:
+  app:
     build:
       context: .
       dockerfile: ./Dockerfile.dev
