@@ -15,7 +15,7 @@ services:
       dockerfile: ./Dockerfile.dev
     image: "eberhm/slack_gh_code_challenge_app:latest"
     ports:
-      - $SLACK_CC_NODE_LOCAL_PORT:$SLACK_CC_NODE_DOCKER_PORT
+      - $SLACK_CC_APP_LOCAL_PORT:$SLACK_CC_APP_DOCKER_PORT
     env_file:
       - ./.env
     volumes: 

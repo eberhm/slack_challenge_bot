@@ -2,7 +2,7 @@ import { Identifier } from "../../../domain/ValueObjects/Identifier";
 import { Reviewer as ReviewerEntity } from "../../../domain/Entities/Reviewer"
 import { Entity, Column, PrimaryColumn } from "typeorm";
 import { GithubUser } from "../../../domain/ValueObjects/GithubUser";
-import { SlackUser } from "../../../domain/ValueObjects/SlackUser";
+import { SlackId, SlackUser } from "../../../domain/ValueObjects/SlackUser";
 
 @Entity()
 export class Reviewer {
@@ -14,7 +14,7 @@ export class Reviewer {
     githubUsername: string;
 
     @Column()
-    slackUserId: string;
+    slackUserId: SlackId;
 }
 
 export const buildFromOrm = (reviewer: Reviewer): ReviewerEntity => {

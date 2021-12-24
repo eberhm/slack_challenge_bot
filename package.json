@@ -15,6 +15,7 @@
     "node": ">=14.18.0"
   },
   "dependencies": {
+    "@slack/bolt": "^3.8.1",
     "@types/uuid": "^8.3.3",
     "dotenv": "^10.0.0",
     "mysql2": "^2.3.3",
@@ -41,7 +42,7 @@
     "typescript": "^4.4.3"
   },
   "scripts": {
-    "start": "echo 'OK'",
+    "start": "ts-node ./src/application/slack/app.ts",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "lint": "eslint src/**/*.ts",

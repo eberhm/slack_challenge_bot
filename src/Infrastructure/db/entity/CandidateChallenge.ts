@@ -10,6 +10,9 @@ export class CandidateChallenge {
     id: Identifier;
 
     @Column()
+    candidateName: string;
+
+    @Column()
     candidateChallengeUrl: string;
 
     @Column({
@@ -38,6 +41,7 @@ export const buildFromOrm = (candidateChallenge: CandidateChallenge): CandidateC
             id: candidateChallenge.id, 
             candidateChallengeUrl: new URL(candidateChallenge.candidateChallengeUrl), 
             candidate: Candidate.create(
+                candidateChallenge.candidateName,
                 candidateChallenge.githubUsername,
                 new URL(candidateChallenge.resumeUrl)
             ), 
@@ -52,6 +56,7 @@ export const mapToOrm = (candidateChallenge: CandidateChallengeEntity): Candidat
 
     DTO.id = candidateChallenge.getId();
     DTO.candidateChallengeUrl = candidateChallenge.getCandidateChallengeUrl().toString();
+    DTO.candidateName = candidateChallenge.getCandidate().getName();
     DTO.reviewerId1 = reviewerId1;
     DTO.reviewerId2 = reviewerId2;
     DTO.githubUsername = candidateChallenge.getCandidate().getGithubUser().getUsername();

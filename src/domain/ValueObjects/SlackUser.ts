@@ -1,11 +1,12 @@
+export type SlackId = string;
 export class SlackUser {
-    private userId: string;
+    private userId: SlackId;
 
     constructor(id: string) {
       this.userId = id;
     }
 
-    public getUserId(): string {
+    public getUserId(): SlackId {
       return this.userId;
     }
 }
