@@ -18,12 +18,12 @@ export class CandidateChallenge {
     @Column({
         nullable: true,
     })
-    reviewerId1: Identifier;
+    reviewerId1: Identifier | undefined;
 
     @Column({
         nullable: true,
     })
-    reviewerId2: Identifier;
+    reviewerId2: Identifier | undefined;
 
     @Column()
     githubUsername: string;
@@ -36,6 +36,15 @@ export class CandidateChallenge {
 }
 
 export const buildFromOrm = (candidateChallenge: CandidateChallenge): CandidateChallengeEntity => {
+    const reviewerIds: Identifier[] = [];
+    if (candidateChallenge.reviewerId1) {
+        reviewerIds.push(candidateChallenge.reviewerId1);
+    }
+
+    if (candidateChallenge.reviewerId2) {
+        reviewerIds.push(candidateChallenge.reviewerId2);
+    }
+
     return new CandidateChallengeEntity(
         {
             id: candidateChallenge.id, 
@@ -45,7 +54,7 @@ export const buildFromOrm = (candidateChallenge: CandidateChallenge): CandidateC
                 candidateChallenge.githubUsername,
                 new URL(candidateChallenge.resumeUrl)
             ), 
-            reviewerIds: [candidateChallenge.reviewerId1, candidateChallenge.reviewerId2],
+            reviewerIds,
             challengeId: candidateChallenge.challengeId
         });
 }

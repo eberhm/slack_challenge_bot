@@ -5,7 +5,7 @@
 - ~~4 implement missing methods in GithubClient (explore use of templates)~~
 - ~~5 Dev console (Makefile)~~
 - 6 Slack integration
-    - tests for from/to ORM builder
+    - ~~tests for from/to ORM builder~~
     - tests for use cases
 - 7 Github account registration
 - 8 Infrastructure folder tests (EoE ???)
