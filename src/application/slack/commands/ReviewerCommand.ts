@@ -4,7 +4,7 @@ import { parseResponse } from '../lib/ResponseParser';
 import { CreateReviewerUseCase, CreateReviewerUseCaseOptions } from '../../usecases/CreateReviewerUseCase';
 import { Reviewer } from '../../../domain/Entities/Reviewer';
 
-const createReviewerUseCase = new CreateReviewerUseCase(console);
+const createReviewerUseCase = CreateReviewerUseCase.create(console);
 
 export const register = (app: App) => {
 

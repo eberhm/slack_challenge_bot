@@ -7,6 +7,7 @@ import { CreateCandidateChallenge } from '../../domain/Services/CreateCandidateC
 import { Candidate } from '../../domain/ValueObjects/Candidate';
 import { GithubClient } from '../../Infrastructure/GithubClient';
 import { SlackId } from 'src/domain/ValueObjects/SlackUser';
+import { UseCaseLogger } from './Logger';
 
 export type SendChallengeUseCaseOptions = {
   candidateName: string;
@@ -20,9 +21,9 @@ export type SendChallengeUseCaseOptions = {
 export class SendChallengeUseCaseError extends Error {};
 
 export class SendChallengeUseCase {
-  private logger;
+  private logger: UseCaseLogger;
 
-  constructor(logger) {
+  constructor(logger: UseCaseLogger) {
     this.logger = logger || console;
   }
 

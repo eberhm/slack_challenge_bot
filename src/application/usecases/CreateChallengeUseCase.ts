@@ -2,6 +2,7 @@ import { CreateChallenge } from '../../domain/Services/CreateChallenge';
 import { GithubClient } from '../../Infrastructure/GithubClient';
 import { ChallengeRepository } from '../../Infrastructure/ChallengeRepository';
 import { Challenge } from 'src/domain/Entities/Challenge';
+import { UseCaseLogger } from './Logger';
 
 export type CreateChallengeUseCaseOptions = {
   challengeName: string;
@@ -11,20 +12,26 @@ export type CreateChallengeUseCaseOptions = {
 export class CreateChallengeUseCaseError extends Error {};
 
 export class CreateChallengeUseCase {
-  private logger: any;
+  private logger: UseCaseLogger;
+  private createChallengeService: CreateChallenge;
 
-  constructor(logger) {
-    this.logger = logger;
+  constructor(logger: UseCaseLogger, createChallengeService: CreateChallenge) {
+    this.logger = logger || console;
+    this.createChallengeService = createChallengeService;
+  }
+
+  static create(logger: UseCaseLogger) {
+    return new this(logger,
+      new CreateChallenge(
+        new ChallengeRepository(),
+        new GithubClient()
+      )
+    );
   }
 
   async run({ challengeName, chanllengeUrl }: CreateChallengeUseCaseOptions): Promise<Challenge> {
     try {
-      const service = new CreateChallenge(
-        new ChallengeRepository(),
-        new GithubClient()
-      );
-  
-      const challenge = await service.run(challengeName, chanllengeUrl);
+      const challenge = await this.createChallengeService.run(challengeName, chanllengeUrl);
 
       this.logger.info(`Challenge ${chanllengeUrl} created successfully`);
 

@@ -16,7 +16,7 @@ export const builder: CommandBuilder<CreateReviewerUseCaseOptions, CreateReviewe
 
 export const handler = async (argv: Arguments<CreateReviewerUseCaseOptions>): Promise<void> => {
   try {
-    const createReviewerUseCase = new CreateReviewerUseCase(new Logger());
+    const createReviewerUseCase = CreateReviewerUseCase.create(new Logger());
     createReviewerUseCase.run(argv);
     process.exit(0);
   } catch(e) {
