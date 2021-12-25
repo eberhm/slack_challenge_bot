@@ -43,6 +43,8 @@
   },
   "scripts": {
     "start": "ts-node ./src/application/slack/app.ts",
+    "slack_app:create": "ts-node ./src/application/slack/createApp.ts",
+    "slack_app:update": "ts-node ./src/application/slack/updateApp.ts",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "lint": "eslint src/**/*.ts",

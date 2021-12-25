@@ -1,6 +1,24 @@
 # Slack application for managing technical code challenges using Github as SCM
 
 Ported from https://github.com/keremk/challenge-bot (golang) to typescript running on NodeJS
+## Deploying the application
+
+### Creating the slack app
+
+In order to create the slak app the application has an easy way by running:
+
+```
+npm run slack_app:create
+```
+
+In case you are updating the app you should run:
+
+```
+```
+npm run slack_app:update
+```
+```
+
 
 # Development setup
 
