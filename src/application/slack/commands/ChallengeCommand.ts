@@ -9,7 +9,7 @@ import { SendChallengeUseCase, SendChallengeUseCaseOptions } from '../../usecase
 import { CandidateChallenge } from '../../../domain/Entities/CandidateChallenge';
 
 const challengeRepository = new ChallengeRepository();
-const sendChallengeUseCase = new SendChallengeUseCase(console);
+const sendChallengeUseCase = SendChallengeUseCase.create(console);
 const createChallengeUseCase = CreateChallengeUseCase.create(console);
 
 export const register = (app: App) => {

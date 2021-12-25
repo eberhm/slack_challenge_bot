@@ -21,7 +21,7 @@ export const builder: CommandBuilder<SendChallengeUseCaseOptions, SendChallengeU
 export const handler = async (argv: Arguments<SendChallengeUseCaseOptions>): Promise<void> => {
 
   try {
-    const sendChallengeUseCase = new SendChallengeUseCase(new Logger());
+    const sendChallengeUseCase = SendChallengeUseCase.create(new Logger());
 
     sendChallengeUseCase.run(argv);
 
