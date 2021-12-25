@@ -1,5 +1,5 @@
 import { App, ViewSubmitAction } from '@slack/bolt';
-import { registerReviewerPayload, CALLBACK_ID as REGISTER_REVIEWER_CALLBACK_ID } from '../payloads/RegisterReviewerPayloads';
+import { registerReviewerPayload, CALLBACK_ID as REGISTER_REVIEWER_CALLBACK_ID, registerReviewerSuccessResponse } from '../payloads/RegisterReviewerPayloads';
 import { parseResponse } from '../lib/ResponseParser';
 import { CreateReviewerUseCase, CreateReviewerUseCaseOptions } from '../../usecases/CreateReviewerUseCase';
 import { Reviewer } from '../../../domain/Entities/Reviewer';
@@ -23,7 +23,7 @@ export const register = (app: App) => {
     
             client.chat.postMessage({
                 channel: channel.id,
-                text: `Reviewer registered : \`${reviewer.getGithubUser().getUsername()}\``
+                blocks: registerReviewerSuccessResponse(reviewer)
             });
         } catch (e) {
             client.chat.postMessage({

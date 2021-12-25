@@ -1,5 +1,7 @@
 import { ViewsOpenArguments } from "@slack/web-api";
+import { CandidateChallenge } from "../../../domain/Entities/CandidateChallenge";
 import { Challenge } from "../../../domain/Entities/Challenge";
+import { Reviewer } from "../../../domain/Entities/Reviewer";
 
 export const CALLBACK_ID = "send_candidate_challenge";
 export const sendChallengePayload = (triggerId, challenges: Challenge[], metadata: Object): ViewsOpenArguments => {
@@ -141,3 +143,66 @@ export const sendChallengePayload = (triggerId, challenges: Challenge[], metadat
 		}
 	}
 };
+
+export const sendChallengeSuccessResponse = (candidateChallenge: CandidateChallenge, challenge?: Challenge, reviewers?: Reviewer[]) => {
+	const githubUsername = candidateChallenge.getCandidate().getGithubUser().getUsername();
+	const reviewersHandlesList = reviewers!.map((reviewer) => `<@${reviewer.getSlackUser().getUserId()}>`).concat(' ');
+
+	return [
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "Code Challenge sent successfully!",
+				"emoji": true
+			}
+		},
+		{
+			"type": "context",
+			"elements": [
+				{
+					"type": "mrkdwn",
+					"text": `You have created a new coding challenge <${candidateChallenge.getCandidateChallengeUrl()}|here>`
+				}
+			]
+		},
+		{
+			"type": "context",
+			"elements": [
+				{
+					"type": "mrkdwn",
+					"text": `*Candidate Name:* <${candidateChallenge.getCandidate().getResumeUrl()}|${candidateChallenge.getCandidate().getName()}>`
+				},
+				{
+					"type": "mrkdwn",
+					"text": `*Github Alias:* <https://github.com/${githubUsername}|${githubUsername}>`
+				}
+			]
+		},
+		{
+			"type": "context",
+			"elements": [
+				{
+					"type": "mrkdwn",
+					"text": `This <${challenge!.getUrl()}|issue> was created for you to track and discuss it.`
+				},
+				{
+					"type": "mrkdwn",
+					"text": `You can track running coding challenges for this challenge <${challenge!.getUrl()}/issues|here>`
+				}
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "context",
+			"elements": [
+				{
+					"type": "mrkdwn",
+					"text": `*Reviewers:* ${reviewersHandlesList}`
+				}
+			]
+		}
+	]
+}

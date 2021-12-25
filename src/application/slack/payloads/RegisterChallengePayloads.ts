@@ -1,4 +1,5 @@
 import { ViewsOpenArguments } from "@slack/web-api";
+import { Challenge } from "../../../domain/Entities/Challenge";
 
 export const CALLBACK_ID = 'register_challenge';
 export const registerChallengePayload = (triggerId, metadata = {}): ViewsOpenArguments => ({
@@ -52,3 +53,17 @@ export const registerChallengePayload = (triggerId, metadata = {}): ViewsOpenArg
 		}
 	}
 });
+
+export const registerChallengeSuccessResponse = (challenge: Challenge) => {
+	return [
+			{
+				"type": "context",
+				"elements": [
+					{
+						"type": "mrkdwn",
+						"text": `:rocket: Challenge <${challenge.getUrl()}|${challenge.getName()}> created successfully!`
+					}
+				]
+			}
+		];
+} 

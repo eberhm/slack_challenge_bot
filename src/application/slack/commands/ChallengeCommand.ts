@@ -1,14 +1,17 @@
 import { App, ViewSubmitAction } from '@slack/bolt';
-import { registerChallengePayload, CALLBACK_ID as REGISTER_CHALLENGE_CALLBACK_ID } from '../payloads/RegisterChallengePayloads';
-import { sendChallengePayload, CALLBACK_ID as SEND_CHALLENGE_CALLBACK_ID } from '../payloads/SendChallengePayloads';
+import { registerChallengePayload, CALLBACK_ID as REGISTER_CHALLENGE_CALLBACK_ID, registerChallengeSuccessResponse } from '../payloads/RegisterChallengePayloads';
+import { sendChallengePayload, CALLBACK_ID as SEND_CHALLENGE_CALLBACK_ID, sendChallengeSuccessResponse } from '../payloads/SendChallengePayloads';
 import { ChallengeRepository } from '../../../Infrastructure/ChallengeRepository';
 import { CreateChallengeUseCase, CreateChallengeUseCaseOptions } from '../../usecases/CreateChallengeUseCase';
 import { parseResponse } from '../lib/ResponseParser';
 import { Challenge } from '../../../domain/Entities/Challenge';
 import { SendChallengeUseCase, SendChallengeUseCaseOptions } from '../../usecases/SendChallengeUseCase';
 import { CandidateChallenge } from '../../../domain/Entities/CandidateChallenge';
+import { ReviewerRepository } from '../../../Infrastructure/ReviewerRepository';
+import { Reviewer } from '../../../domain/Entities/Reviewer';
 
 const challengeRepository = new ChallengeRepository();
+const reviewersRepository = new ReviewerRepository();
 const sendChallengeUseCase = SendChallengeUseCase.create(console);
 const createChallengeUseCase = CreateChallengeUseCase.create(console);
 
@@ -29,12 +32,12 @@ export const register = (app: App) => {
     
             client.chat.postMessage({
                 channel: channel.id,
-                text: `Challenge registered with name: \`${challenge.getName()}\``
+                blocks: registerChallengeSuccessResponse(challenge)
             });
         } catch (e) {
             client.chat.postMessage({
                 channel: body.user.id,
-                text: `There was an error while registering the Challenge. Error: ${e.message}`
+                text: `There was an error while registering the challenge. Error: ${e.message}`
             });
         }
     });
@@ -42,9 +45,11 @@ export const register = (app: App) => {
     app.view<ViewSubmitAction>(SEND_CHALLENGE_CALLBACK_ID, async ({ body, client, ack, view }) => {
         try {
             await ack({ response_action: 'clear' });
-            
-            const channel = JSON.parse(view.private_metadata).channel;
+
             const values = parseResponse(view.state.values);
+            const channel = JSON.parse(view.private_metadata).channel;
+            const reviewers = await reviewersRepository.findBySlackIds([ values.reviewer1, values.reviewer2 ]);
+            const challenge = await challengeRepository.findByName(values.challenge_name);
             const useCaseOptions: SendChallengeUseCaseOptions = {
                 candidateName: values.candidate_name,
                 challengeName: values.challenge_name,
@@ -58,7 +63,7 @@ export const register = (app: App) => {
     
             client.chat.postMessage({
                 channel: channel.id,
-                text: `Challenge registered ${candidateChallenge.getCandidateChallengeUrl()}`
+                blocks: sendChallengeSuccessResponse(candidateChallenge, challenge, reviewers || [])
             });
         } catch (e) {
             client.chat.postMessage({
