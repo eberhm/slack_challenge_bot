@@ -8,7 +8,7 @@
     - ~~tests for from/to ORM builder~~
     - ~~tests for use cases~~~
     - ~~Success messages~~
-    - Create Issue after code challenge
+    - **Create Issue after code challenge**
 - 7 Github account registration
 - 8 Infrastructure folder tests (EoE ???)
 
