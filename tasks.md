@@ -6,7 +6,9 @@
 - ~~5 Dev console (Makefile)~~
 - 6 Slack integration
     - ~~tests for from/to ORM builder~~
-    - tests for use cases
+    - ~~tests for use cases~~~
+    - ~~Success messages~~
+    - Create Issue after code challenge
 - 7 Github account registration
 - 8 Infrastructure folder tests (EoE ???)
 
@@ -16,4 +18,4 @@
 - Use of DIC?
 
 # Bugs
-- When sending a code challenge, the candidate is not being invited as collaborator
+- ~~When sending a code challenge, the candidate is not being invited as collaborator~~

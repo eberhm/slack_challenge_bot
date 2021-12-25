@@ -13,7 +13,7 @@ export class GithubClient implements GithubClientInterface {
         try {
             const { owner, repo } = this.parseOwnerAndRepo(challenge.getUrl()); 
             const candidateGithubUsername = candidate.getGithubUser().getUsername();
-            const repoName = `${repo}_${candidateGithubUsername}`;
+            const repoName = `test_${repo}_${candidateGithubUsername}`;
 
             const response = await octokit.rest.repos.createUsingTemplate({
                 template_owner: owner, // eslint-disable-line camelcase

@@ -1,4 +1,5 @@
 import { ViewsOpenArguments } from "@slack/web-api";
+import { Reviewer } from "../../../domain/Entities/Reviewer";
 
 export const CALLBACK_ID = "register_reviewer";
 export const registerReviewerPayload = (triggerId, metadata: Object): ViewsOpenArguments => {
@@ -58,3 +59,17 @@ export const registerReviewerPayload = (triggerId, metadata: Object): ViewsOpenA
 		}
 	}
 };
+
+export const registerReviewerSuccessResponse = (reviewer: Reviewer) => {
+	return [
+		{
+			"type": "context",
+			"elements": [
+				{
+					"type": "mrkdwn",
+					"text": `:tada: Reviewer <@${reviewer.getSlackUser().getUserId()}> created successfully!`
+				}
+			]
+		}
+	];
+}
