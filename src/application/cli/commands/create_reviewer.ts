@@ -1,16 +1,11 @@
 import type { Arguments, CommandBuilder } from 'yargs';
-import { ReviewerRepository } from '../../../Infrastructure/ReviewerRepository';
-import { CreateReviewer } from '../../../domain/Services/CreateReviewer';
-
-type Options = {
-  slackId: string;
-  githubUsername: string;
-};
+import { CreateReviewerUseCase, CreateReviewerUseCaseOptions } from '../../usecases/CreateReviewerUseCase';
+import { Logger } from '../lib/Logger';
 
 export const command: string = 'create_reviewer <slackId> <githubUsername>';
 export const desc: string = 'Creates a reviewer establishing the relation between the slackId and the github username';
 
-export const builder: CommandBuilder<Options, Options> = (yargs) =>
+export const builder: CommandBuilder<CreateReviewerUseCaseOptions, CreateReviewerUseCaseOptions> = (yargs) =>
   yargs
   .parserConfiguration({
     "dot-notation": false
@@ -19,19 +14,13 @@ export const builder: CommandBuilder<Options, Options> = (yargs) =>
   .positional('githubHandler', { type: 'string', demandOption: true });
     
 
-export const handler = async (argv: Arguments<Options>): Promise<void> => {
-  const { slackId, githubUsername }: Options = argv;
-
+export const handler = async (argv: Arguments<CreateReviewerUseCaseOptions>): Promise<void> => {
   try {
-    const service = new CreateReviewer(
-      new ReviewerRepository()
-    );
-
-    await service.run(githubUsername, slackId);
-    process.stdout.write(`Reviewer created. SlackId: ${slackId}, githubUsername: ${githubUsername}`);
+    const createReviewerUseCase = CreateReviewerUseCase.create(new Logger());
+    createReviewerUseCase.run(argv);
     process.exit(0);
   } catch(e) {
-    process.stderr.write(`Error creating Reviewer: ${e.message}. SlackId: ${slackId}, githubUsername: ${githubUsername}`);
+    process.stderr.write(e.message);
     process.exit(1);
   }
 };

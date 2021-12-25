@@ -1,16 +1,17 @@
 import 'jest';
 import { Candidate } from '../../../src/domain/ValueObjects/Candidate';
-import { CandidateChallenge, EmptyReviewersError } from '../../../src/domain/Entities/CandidateChallenge';
+import { CandidateChallenge } from '../../../src/domain/Entities/CandidateChallenge';
 import { Identifier } from '../../../src/domain/ValueObjects/Identifier';
 
 describe('CandidateChanllenge Entity', () => {
     const ANY_ID = "anystring";
+    const ANY_NAME = "any name";
     const ANY_URL = new URL('https://anything.com');
     const ANY_VALID_GH_USERNAME = 'anothervalid.user';
 
     it('Can be created having a valid state', () => {
 
-        const candidate = Candidate.create(ANY_VALID_GH_USERNAME, ANY_URL);
+        const candidate = Candidate.create(ANY_NAME, ANY_VALID_GH_USERNAME, ANY_URL);
         const challenge = CandidateChallenge.create(
             ANY_URL,
             candidate,
@@ -30,7 +31,7 @@ describe('CandidateChanllenge Entity', () => {
 
         const challenge = CandidateChallenge.create(
             ANY_URL,
-            Candidate.create(ANY_VALID_GH_USERNAME, ANY_URL),
+            Candidate.create(ANY_NAME, ANY_VALID_GH_USERNAME, ANY_URL),
             emptyReviewers,
             ANY_ID
         );

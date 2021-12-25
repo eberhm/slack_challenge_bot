@@ -19,9 +19,10 @@ describe('CreateCandidateChallenge Service', () => {
     const ANY_ID = 'any_valid_uuid';
     const ANY_VALID_URL = 'https://valid.url'
     const ANY_VALID_CHALLENGE_NAME = 'any_name'
+    const ANY_VALID_CANDIDATE_NAME = 'any_name'
     const ANY_GH_USERNAME = 'any_username';
     const ANY_SLACK_ID = 'any_slack_id';
-    const ANY_VALID_CANDIDATE = Candidate.create(ANY_GH_USERNAME, new URL(ANY_VALID_URL));
+    const ANY_VALID_CANDIDATE = Candidate.create(ANY_VALID_CANDIDATE_NAME, ANY_GH_USERNAME, new URL(ANY_VALID_URL));
 
     let reviewersRepository: ReviewerRepository,
         candidateChallengeRepository: CandidateChallengeRepository,

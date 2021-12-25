@@ -1,12 +1,22 @@
-import { createConnection, EntityTarget, Repository } from "typeorm";
-import connectionOptions from "../../../ormconfig"
+import { Connection, createConnection, EntityTarget, Repository } from "typeorm";
+import connectionOptions from "../../../ormconfig";
 
 const reposCache = new Map();
+let conn: Promise<Connection> | undefined = undefined;
 
-export const connection = createConnection(connectionOptions);
-export function getRepository<Entity>(type: EntityTarget<Entity>): Promise<Repository<Entity>> { 
+const getConnection = (): Promise<Connection> | undefined => {
+    if (conn) {
+        return conn;
+    }
+
+    conn = createConnection(connectionOptions);
+    return conn;
+}
+
+export async function getRepository<Entity>(type: EntityTarget<Entity>): Promise<Repository<Entity>> { 
     
     if (!reposCache.has(type)) {
+        const connection = getConnection() as Promise<Connection>;
         reposCache.set(type, connection.then((conn) => conn.getRepository(type)));
     }
 

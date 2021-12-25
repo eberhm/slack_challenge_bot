@@ -27,6 +27,12 @@ export class GithubClient implements GithubClientInterface {
                 throw new Error(`GH Request error. Status code: ${response.status}`);
             }
 
+            await octokit.rest.repos.addCollaborator({
+                owner,
+                repo: repoName,
+                username: candidate.getGithubUser().getUsername()
+            });
+
             return new URL(response.data.html_url);
         } catch (e) {
             throw new GithubClientError(`Error while creating candidate repository. Error: ${e.message}`);

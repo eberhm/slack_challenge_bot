@@ -10,17 +10,20 @@ export class CandidateChallenge {
     id: Identifier;
 
     @Column()
+    candidateName: string;
+
+    @Column()
     candidateChallengeUrl: string;
 
     @Column({
         nullable: true,
     })
-    reviewerId1: Identifier;
+    reviewerId1?: Identifier;
 
     @Column({
         nullable: true,
     })
-    reviewerId2: Identifier;
+    reviewerId2?: Identifier;
 
     @Column()
     githubUsername: string;
@@ -33,15 +36,25 @@ export class CandidateChallenge {
 }
 
 export const buildFromOrm = (candidateChallenge: CandidateChallenge): CandidateChallengeEntity => {
+    const reviewerIds: Identifier[] = [];
+    if (candidateChallenge.reviewerId1) {
+        reviewerIds.push(candidateChallenge.reviewerId1);
+    }
+
+    if (candidateChallenge.reviewerId2) {
+        reviewerIds.push(candidateChallenge.reviewerId2);
+    }
+
     return new CandidateChallengeEntity(
         {
             id: candidateChallenge.id, 
             candidateChallengeUrl: new URL(candidateChallenge.candidateChallengeUrl), 
             candidate: Candidate.create(
+                candidateChallenge.candidateName,
                 candidateChallenge.githubUsername,
                 new URL(candidateChallenge.resumeUrl)
             ), 
-            reviewerIds: [candidateChallenge.reviewerId1, candidateChallenge.reviewerId2],
+            reviewerIds,
             challengeId: candidateChallenge.challengeId
         });
 }
@@ -52,6 +65,7 @@ export const mapToOrm = (candidateChallenge: CandidateChallengeEntity): Candidat
 
     DTO.id = candidateChallenge.getId();
     DTO.candidateChallengeUrl = candidateChallenge.getCandidateChallengeUrl().toString();
+    DTO.candidateName = candidateChallenge.getCandidate().getName();
     DTO.reviewerId1 = reviewerId1;
     DTO.reviewerId2 = reviewerId2;
     DTO.githubUsername = candidateChallenge.getCandidate().getGithubUser().getUsername();

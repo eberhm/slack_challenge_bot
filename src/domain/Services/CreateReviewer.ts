@@ -12,12 +12,16 @@ export class CreateReviewer {
       this.reviewerRepository = reviewerRepository;
     }
 
-    public run(githubUsername: string, slackId: string): Promise<Reviewer> {
-      const reviewer = Reviewer.create(
-        new GithubUser(githubUsername),
-        new SlackUser(slackId),
-      );
-
-      return this.reviewerRepository.save(reviewer);
+    public async run(githubUsername: string, slackId: string): Promise<Reviewer> {
+      try {
+        const reviewer = Reviewer.create(
+          new GithubUser(githubUsername),
+          new SlackUser(slackId),
+        );
+  
+        return this.reviewerRepository.save(reviewer);
+      } catch (e) {
+        throw new CreateReviewerError(`Error in CreateReviewer Service. Error: ${e.message}`);
+      }
     }
 }

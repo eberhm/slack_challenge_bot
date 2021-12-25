@@ -30,4 +30,8 @@ export class InMemoryChallengeRepository implements ChallengeRepository {
 
         return Promise.resolve(found);
     }
+
+    findAll(): Promise<Challenge[]> {
+        return Promise.resolve([...this.storage.values()]);
+    }
 }

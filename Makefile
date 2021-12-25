@@ -56,7 +56,7 @@ setup: ## Installs all dependencies (docker for mac should be preinstalled)
 .PHONY: setup
 
 start: ## Starts the application
-	docker-compose up -d
+	docker-compose up
 .PHONY: start
 
 restart: ## Restarts the application

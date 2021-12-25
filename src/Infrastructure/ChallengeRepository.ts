@@ -35,6 +35,23 @@ export class ChallengeRepository implements ChallengeRepositoryInterface {
         }
     }
 
+    async findAll(): Promise<Challenge[] | undefined> {
+        try {
+            return await this.getOrmRepository()
+            .then(
+                repo => repo.find().then((challenges) => {
+                    if (!challenges) {
+                        return undefined;
+                    }
+
+                    return challenges.map((challenge) => buildFromOrm(challenge));
+                }
+            ));
+        } catch (e) {
+            throw new Error(`Error Retrieving all Challenges in the repository: ${e.message}`);
+        }
+    }
+
     async save(challenge: Challenge): Promise<Challenge> {
         try {
             await this.getOrmRepository()

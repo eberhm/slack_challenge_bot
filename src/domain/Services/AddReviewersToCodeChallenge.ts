@@ -3,6 +3,7 @@ import { Identifier } from '../ValueObjects/Identifier';
 import { CandidateChallengeRepository } from '../Interfaces/CandidateChallengeRepository';
 import { ReviewerRepository } from '../Interfaces/ReviewerRepository';
 import { GithubClientInterface } from '../Interfaces/GithubClientInterface';
+import { SlackId } from '../ValueObjects/SlackUser';
 
 export class AddReviewersToCodeChallengeError extends Error {}
 
@@ -24,13 +25,13 @@ export class AddReviewersToCodeChallenge {
 
     public async run(
       candidateChallenge: CandidateChallenge,
-      reviewerIds: Array<Identifier>
+      reviewerIds: Array<SlackId>
     ): Promise<CandidateChallenge> {
       try {
 
-        const reviewers = await this.reviewersRepository.findByIds(reviewerIds);
+        const reviewers = await this.reviewersRepository.findBySlackIds(reviewerIds);
 
-        if (!Array.isArray(reviewers)) {
+        if (!Array.isArray(reviewers) || reviewers.length <= 0 ) {
           throw new Error(`Reviewers not found: ${reviewerIds.concat(', ') }`);
         }
 
