@@ -18,12 +18,12 @@ export class CandidateChallenge {
     @Column({
         nullable: true,
     })
-    reviewerId1: Identifier | undefined;
+    reviewerId1?: Identifier;
 
     @Column({
         nullable: true,
     })
-    reviewerId2: Identifier | undefined;
+    reviewerId2?: Identifier;
 
     @Column()
     githubUsername: string;

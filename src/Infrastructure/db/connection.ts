@@ -5,11 +5,12 @@ const reposCache = new Map();
 let conn: Promise<Connection> | undefined = undefined;
 
 const getConnection = (): Promise<Connection> | undefined => {
-    if (!conn) {
-        conn = createConnection(connectionOptions)
-    } else {
+    if (conn) {
         return conn;
     }
+
+    conn = createConnection(connectionOptions);
+    return conn;
 }
 
 export async function getRepository<Entity>(type: EntityTarget<Entity>): Promise<Repository<Entity>> { 
