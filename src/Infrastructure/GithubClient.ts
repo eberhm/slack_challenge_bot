@@ -3,8 +3,8 @@ import { Reviewer } from '../domain/Entities/Reviewer';
 import { GithubClientInterface } from '../domain/Interfaces/GithubClientInterface';
 import { Candidate } from '../domain/ValueObjects/Candidate';
 import { Octokit } from 'octokit';
-import { CandidateChallenge } from 'src/domain/Entities/CandidateChallenge';
-import { GithubUser } from 'src/domain/ValueObjects/GithubUser';
+import { CandidateChallenge } from '../domain/Entities/CandidateChallenge';
+import { GithubUser } from '../domain/ValueObjects/GithubUser';
 
 export class GithubClientError extends Error {};
 
