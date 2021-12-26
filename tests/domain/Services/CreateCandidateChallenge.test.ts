@@ -53,9 +53,16 @@ describe('CreateCandidateChallenge Service', () => {
         expect(service.run(ANY_VALID_CANDIDATE, ANY_ID )).rejects.toEqual(new CreateCandidateChallengeError('Challenge with id: any_valid_uuid not found'));
     });
 
-    it('fails when the githubClient fails', async () => {
+    it('fails when the githubClient fails creating the code challenge', async () => {
         const CLIENT_ERROR_MESSAGE = 'Error in GHClient';
         githubClient.createChallengeForCandidate = jest.fn().mockRejectedValue(new Error(CLIENT_ERROR_MESSAGE));
+
+        expect(service.run(ANY_VALID_CANDIDATE, challenge.getId() )).rejects.toEqual(new CreateCandidateChallengeError(CLIENT_ERROR_MESSAGE));
+    });
+
+    it('fails when the githubClient fails adding the candidate as collaborator', async () => {
+        const CLIENT_ERROR_MESSAGE = 'Error in GHClient';
+        githubClient.addCollaboratorToCandidateChallenge = jest.fn().mockRejectedValue(new Error(CLIENT_ERROR_MESSAGE));
 
         expect(service.run(ANY_VALID_CANDIDATE, challenge.getId() )).rejects.toEqual(new CreateCandidateChallengeError(CLIENT_ERROR_MESSAGE));
     });

@@ -3,11 +3,33 @@ import { Reviewer } from '../domain/Entities/Reviewer';
 import { GithubClientInterface } from '../domain/Interfaces/GithubClientInterface';
 import { Candidate } from '../domain/ValueObjects/Candidate';
 import { Octokit } from 'octokit';
+import { CandidateChallenge } from 'src/domain/Entities/CandidateChallenge';
+import { GithubUser } from 'src/domain/ValueObjects/GithubUser';
 
 export class GithubClientError extends Error {};
 
 const octokit = new Octokit({ auth: process.env.SLACK_CC_GITHUB_TOKEN });
 export class GithubClient implements GithubClientInterface {
+
+    async addCollaboratorToCandidateChallenge(candidateChallenge: CandidateChallenge, collaborator: GithubUser): Promise<URL> {
+        try {
+            const { owner, repo } = this.parseOwnerAndRepo(candidateChallenge.getCandidateChallengeUrl()); 
+
+            const response = await octokit.rest.repos.addCollaborator({
+                owner,
+                repo,
+                username: collaborator.getUsername()
+            });
+
+            if (!this.requestWasSuccess(response)) {
+                throw new Error(`GH Request error. Status code: ${response.status}`);
+            }
+
+            return new URL(response.data.html_url);
+        } catch (e) {
+            throw new GithubClientError(`Error while adding collaborator ${collaborator.getUsername()} to repository candidate repository ${candidateChallenge.getCandidateChallengeUrl()}. Error: ${e.message}`);
+        }
+    }
 
     async createChallengeForCandidate(challenge: Challenge, candidate: Candidate): Promise<URL> {
         try {
@@ -39,6 +61,27 @@ export class GithubClient implements GithubClientInterface {
         }
     }
 
+    async createIssueForCandidateChallenge(candidateChallenge: CandidateChallenge, challenge: Challenge): Promise<URL> {
+        try {
+            const { owner, repo } = this.parseOwnerAndRepo(challenge.getUrl()); 
+
+            const response = await octokit.rest.issues.create({
+                owner,
+                repo,
+                title: `Code Challenge for ${candidateChallenge.getCandidate().getName()}`,
+                body: `Github Alias: ${candidateChallenge.getCandidate().getGithubUser().getUsername()}\nCoding Challenge Link: ${candidateChallenge.getCandidateChallengeUrl()}\nResume Link: ${candidateChallenge.getCandidate().getResumeUrl()}`
+            });
+
+            if (!this.requestWasSuccess(response)) {
+                throw new Error(`GH Request error. Status code: ${response.status}`);
+            }
+
+            return new URL(response.data.html_url);
+        } catch (e) {
+            throw new GithubClientError(`Error while creating issue for candidate challenge. Error: ${e.message}`);
+        }
+    }
+
     private requestWasSuccess(response):boolean {
         return !!(response.status.toString()[0] == '2');
     }
@@ -50,34 +93,6 @@ export class GithubClient implements GithubClientInterface {
             return this.requestWasSuccess(response);
         } catch(e) {
             throw new GithubClientError(e.message);
-        }
-    }
-
-    async addReviewersToCodeChallenge(candidateChallengeUrl: URL, reviewers: Reviewer[]): Promise<void> {
-        try {
-            const { owner, repo } = this.parseOwnerAndRepo(candidateChallengeUrl);
-            const result = await Promise.allSettled(
-                reviewers.map((reviewer) => {
-                    return octokit.rest.repos.addCollaborator({
-                        owner,
-                        repo,
-                        username: reviewer.getGithubUser().getUsername()
-                    });
-                })
-            );
-
-            /** TODO: how do we control this error? */
-            /*
-            const allRequestOK = result.reduce(
-                (status, addOwnerReqResult) => status && this.requestWasSuccess(addOwnerReqResult), 
-                true);
-
-            if (!allRequestOK) {
-                console.warn(`Not all collaborators where added`)
-            }
-            */
-        } catch (e) {
-               throw new GithubClientError(`Error while adding collaborators to repo: ${e.message}`);
         }
     }
 

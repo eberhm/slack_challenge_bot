@@ -1,9 +1,11 @@
+import { CandidateChallenge } from '../Entities/CandidateChallenge';
 import { Challenge } from '../Entities/Challenge';
-import { Reviewer } from '../Entities/Reviewer';
 import { Candidate } from '../ValueObjects/Candidate';
+import { GithubUser } from '../ValueObjects/GithubUser';
 
 export interface GithubClientInterface {
     createChallengeForCandidate(challenge: Challenge, candidate: Candidate): Promise<URL>;
-    addReviewersToCodeChallenge(candidateChallengeUrl: URL, reviewers: Reviewer[]): Promise<void>;
+    addCollaboratorToCandidateChallenge(candidateChallenge: CandidateChallenge, collaborator: GithubUser): Promise<URL>;
+    createIssueForCandidateChallenge(candidateChallenge: CandidateChallenge, challenge: Challenge): Promise<URL>;
     githubRepositoryExists(url: URL): Promise<boolean>;
 }

@@ -47,6 +47,8 @@ export class CreateCandidateChallenge {
           challengeId,
         );
 
+        await this.githubClient.addCollaboratorToCandidateChallenge(candidateChallenge, candidate.getGithubUser())
+        
         return await this.candidateChallengeRepository.save(candidateChallenge);
       } catch (e) {
         throw new CreateCandidateChallengeError(e.message);

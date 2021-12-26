@@ -36,7 +36,7 @@ describe('SendChallengeUseCase', () => {
       createCandidateChallengeService = new CreateCandidateChallenge(
         new InMemoryCandidateChallengeRepository(),
         challengeRepository,
-        new SandboxedGithubClient()
+        githubClient
       );
       addReviewersToChallengeService = new AddReviewersToCodeChallenge(
         new InMemoryCandidateChallengeRepository(),
