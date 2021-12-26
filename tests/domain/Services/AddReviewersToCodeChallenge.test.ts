@@ -38,7 +38,7 @@ describe('AddReviewersToCodeChallenge Service', () => {
     beforeEach(setUp)
 
     it('can add reviewers to an existing GHCodeChallenge', async () => {
-        //WARN mutable state
+        //WARN: mutable state
         //TODO: make immutable implementation
         await service.run(candidateChallenge, reviewerSlackIds);
 
@@ -47,7 +47,7 @@ describe('AddReviewersToCodeChallenge Service', () => {
 
     it('fails when the githubClient fails', async () => {
         const CLIENT_ERROR_MESSAGE = 'Error in GHClient';
-        githubClient.addReviewersToCodeChallenge = jest.fn().mockRejectedValue(new Error(CLIENT_ERROR_MESSAGE));
+        githubClient.addCollaboratorToCandidateChallenge = jest.fn().mockRejectedValue(new Error(CLIENT_ERROR_MESSAGE));
 
         expect(service.run(candidateChallenge, reviewerSlackIds)).rejects.toEqual(new AddReviewersToCodeChallengeError(CLIENT_ERROR_MESSAGE));
     });

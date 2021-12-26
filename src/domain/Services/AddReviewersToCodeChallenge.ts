@@ -1,5 +1,4 @@
 import { CandidateChallenge } from '../Entities/CandidateChallenge';
-import { Identifier } from '../ValueObjects/Identifier';
 import { CandidateChallengeRepository } from '../Interfaces/CandidateChallengeRepository';
 import { ReviewerRepository } from '../Interfaces/ReviewerRepository';
 import { GithubClientInterface } from '../Interfaces/GithubClientInterface';
@@ -35,7 +34,12 @@ export class AddReviewersToCodeChallenge {
           throw new Error(`Reviewers not found: ${reviewerIds.concat(', ') }`);
         }
 
-        await this.githubClient.addReviewersToCodeChallenge(candidateChallenge.getCandidateChallengeUrl(), reviewers);
+        //TODO: control some api call fails. Now it fails on any call.
+
+        await Promise.all(reviewers.map((reviewer) =>
+          this.githubClient.addCollaboratorToCandidateChallenge(candidateChallenge, reviewer.getGithubUser())
+          )
+        );
 
         return this.candidateChallengeRepository.addReviewers(candidateChallenge, reviewers);
       } catch (e) {
