@@ -10,7 +10,7 @@
     - ~~Success messages~~
     - Create Issue after code challenge
 - 7 Github account registration
-- 8 Infrastructure folder tests (EoE ???)
+- 8 infrastructure folder tests (EoE ???)
 - Production deployment
     - AWS
 

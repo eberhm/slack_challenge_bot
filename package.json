@@ -8,7 +8,7 @@
   },
   "main": "index.js",
   "bin": {
-    "berry_challenges": "./src/Infrastructure/ui/cli/cli.ts"
+    "berry_challenges": "./src/infrastructure/ui/cli/cli.ts"
   },
   "engines": {
     "npm": ">=6.14.0",
@@ -42,7 +42,7 @@
     "typescript": "^4.4.3"
   },
   "scripts": {
-    "start": "ts-node ./src/Infrastructure/ui/slack/app.ts",
+    "start": "ts-node ./src/infrastructure/ui/slack/app.ts",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "lint": "eslint src/**/*.ts",

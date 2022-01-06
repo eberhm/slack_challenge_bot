@@ -11,10 +11,10 @@ import { CreateReviewer } from '../../../src/domain/Services/CreateReviewer';
 import { Candidate } from '../../../src/domain/ValueObjects/Candidate';
 import { Identifier } from '../../../src/domain/ValueObjects/Identifier';
 import { SlackId } from '../../../src/domain/ValueObjects/SlackUser';
-import { InMemoryCandidateChallengeRepository } from '../../Infrastructure/Repositories/InMemoryCandidateChallengeRepository';
-import { InMemoryChallengeRepository } from '../../Infrastructure/Repositories/InMemoryChallengeRepository';
-import { InMemoryReviewerRepository } from '../../Infrastructure/Repositories/InMemoryReviewerRepository';
-import { SandboxedGithubClient } from '../../Infrastructure/Repositories/SandboxedGithubClient';
+import { InMemoryCandidateChallengeRepository } from '../../infrastructure/Repositories/InMemoryCandidateChallengeRepository';
+import { InMemoryChallengeRepository } from '../../infrastructure/Repositories/InMemoryChallengeRepository';
+import { InMemoryReviewerRepository } from '../../infrastructure/Repositories/InMemoryReviewerRepository';
+import { SandboxedGithubClient } from '../../infrastructure/Repositories/SandboxedGithubClient';
 
 describe('AddReviewersToCodeChallenge Service', () => {
 

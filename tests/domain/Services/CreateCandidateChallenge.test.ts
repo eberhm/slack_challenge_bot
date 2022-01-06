@@ -9,10 +9,10 @@ import { CreateCandidateChallenge, CreateCandidateChallengeError } from '../../.
 import { CreateChallenge } from '../../../src/domain/Services/CreateChallenge';
 import { CreateReviewer } from '../../../src/domain/Services/CreateReviewer';
 import { Candidate } from '../../../src/domain/ValueObjects/Candidate';
-import { InMemoryCandidateChallengeRepository } from '../../Infrastructure/Repositories/InMemoryCandidateChallengeRepository';
-import { InMemoryChallengeRepository } from '../../Infrastructure/Repositories/InMemoryChallengeRepository';
-import { InMemoryReviewerRepository } from '../../Infrastructure/Repositories/InMemoryReviewerRepository';
-import { SandboxedGithubClient, CHALLENGE_FOR_CANDIDATE_REPO_URL } from '../../Infrastructure/Repositories/SandboxedGithubClient';
+import { InMemoryCandidateChallengeRepository } from '../../infrastructure/Repositories/InMemoryCandidateChallengeRepository';
+import { InMemoryChallengeRepository } from '../../infrastructure/Repositories/InMemoryChallengeRepository';
+import { InMemoryReviewerRepository } from '../../infrastructure/Repositories/InMemoryReviewerRepository';
+import { SandboxedGithubClient, CHALLENGE_FOR_CANDIDATE_REPO_URL } from '../../infrastructure/Repositories/SandboxedGithubClient';
 
 describe('CreateCandidateChallenge Service', () => {
 
