@@ -1,5 +1,5 @@
 import { ViewsOpenArguments } from "@slack/web-api";
-import { Challenge } from "../../../domain/Entities/Challenge";
+import { Challenge } from "../../../../domain/Entities/Challenge";
 
 export const CALLBACK_ID = 'register_challenge';
 export const registerChallengePayload = (triggerId, metadata = {}): ViewsOpenArguments => ({

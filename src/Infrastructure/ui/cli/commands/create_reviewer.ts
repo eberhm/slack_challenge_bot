@@ -1,5 +1,5 @@
 import type { Arguments, CommandBuilder } from 'yargs';
-import { CreateReviewerUseCase, CreateReviewerUseCaseOptions } from '../../usecases/CreateReviewerUseCase';
+import { CreateReviewerUseCase, CreateReviewerUseCaseOptions } from '../../../../application/usecases/CreateReviewerUseCase';
 import { Logger } from '../lib/Logger';
 
 export const command: string = 'create_reviewer <slackId> <githubUsername>';

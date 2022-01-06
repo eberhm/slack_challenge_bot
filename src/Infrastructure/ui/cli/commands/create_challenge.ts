@@ -1,5 +1,5 @@
 import type { Arguments, CommandBuilder } from 'yargs';
-import { CreateChallengeUseCase, CreateChallengeUseCaseOptions } from '../../usecases/CreateChallengeUseCase';
+import { CreateChallengeUseCase, CreateChallengeUseCaseOptions } from '../../../../application/usecases/CreateChallengeUseCase';
 import { Logger } from '../lib/Logger';
 
 export const command: string = 'create_challenge <challengeName> <repositoryName>';

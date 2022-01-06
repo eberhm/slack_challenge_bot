@@ -1,5 +1,5 @@
 import { ViewsOpenArguments } from "@slack/web-api";
-import { Reviewer } from "../../../domain/Entities/Reviewer";
+import { Reviewer } from "../../../../domain/Entities/Reviewer";
 
 export const CALLBACK_ID = "register_reviewer";
 export const registerReviewerPayload = (triggerId, metadata: Object): ViewsOpenArguments => {

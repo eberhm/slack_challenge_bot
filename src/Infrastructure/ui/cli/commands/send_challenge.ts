@@ -1,5 +1,5 @@
 import type { Arguments, CommandBuilder } from 'yargs';
-import { SendChallengeUseCase, SendChallengeUseCaseOptions } from '../../usecases/SendChallengeUseCase';
+import { SendChallengeUseCase, SendChallengeUseCaseOptions } from '../../../../application/usecases/SendChallengeUseCase';
 import { Logger } from '../lib/Logger';
 
 export const command: string = 'send_challenge <challengeName> <githubUser> <resumeUrl> <reviewer1> <reviewer2>';

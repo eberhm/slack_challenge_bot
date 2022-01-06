@@ -4,6 +4,9 @@ export interface UseCaseLogger {
     log(message: string): void;
 }
 
+/*
+* To be used in automated tests
+*/
 export class VoidLogger implements UseCaseLogger {
     error(message: string): void {}
     info(message: string): void {}

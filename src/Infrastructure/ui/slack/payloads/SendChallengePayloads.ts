@@ -1,7 +1,7 @@
 import { ViewsOpenArguments } from "@slack/web-api";
-import { CandidateChallenge } from "../../../domain/Entities/CandidateChallenge";
-import { Challenge } from "../../../domain/Entities/Challenge";
-import { Reviewer } from "../../../domain/Entities/Reviewer";
+import { CandidateChallenge } from "../../../../domain/Entities/CandidateChallenge";
+import { Challenge } from "../../../../domain/Entities/Challenge";
+import { Reviewer } from "../../../../domain/Entities/Reviewer";
 
 export const CALLBACK_ID = "send_candidate_challenge";
 export const sendChallengePayload = (triggerId, challenges: Challenge[], metadata: Object): ViewsOpenArguments => {

@@ -1,14 +1,13 @@
 import { App, ViewSubmitAction } from '@slack/bolt';
 import { registerChallengePayload, CALLBACK_ID as REGISTER_CHALLENGE_CALLBACK_ID, registerChallengeSuccessResponse } from '../payloads/RegisterChallengePayloads';
 import { sendChallengePayload, CALLBACK_ID as SEND_CHALLENGE_CALLBACK_ID, sendChallengeSuccessResponse } from '../payloads/SendChallengePayloads';
-import { ChallengeRepository } from '../../../Infrastructure/ChallengeRepository';
-import { CreateChallengeUseCase, CreateChallengeUseCaseOptions } from '../../usecases/CreateChallengeUseCase';
+import { ChallengeRepository } from '../../../ChallengeRepository';
+import { CreateChallengeUseCase, CreateChallengeUseCaseOptions } from '../../../../application/usecases/CreateChallengeUseCase';
 import { parseResponse } from '../lib/ResponseParser';
-import { Challenge } from '../../../domain/Entities/Challenge';
-import { SendChallengeUseCase, SendChallengeUseCaseOptions } from '../../usecases/SendChallengeUseCase';
-import { CandidateChallenge } from '../../../domain/Entities/CandidateChallenge';
-import { ReviewerRepository } from '../../../Infrastructure/ReviewerRepository';
-import { Reviewer } from '../../../domain/Entities/Reviewer';
+import { Challenge } from '../../../../domain/Entities/Challenge';
+import { SendChallengeUseCase, SendChallengeUseCaseOptions } from '../../../../application/usecases/SendChallengeUseCase';
+import { CandidateChallenge } from '../../../../domain/Entities/CandidateChallenge';
+import { ReviewerRepository } from '../../../ReviewerRepository';
 
 const challengeRepository = new ChallengeRepository();
 const reviewersRepository = new ReviewerRepository();

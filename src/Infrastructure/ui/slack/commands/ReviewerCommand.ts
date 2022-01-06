@@ -1,8 +1,8 @@
 import { App, ViewSubmitAction } from '@slack/bolt';
 import { registerReviewerPayload, CALLBACK_ID as REGISTER_REVIEWER_CALLBACK_ID, registerReviewerSuccessResponse } from '../payloads/RegisterReviewerPayloads';
 import { parseResponse } from '../lib/ResponseParser';
-import { CreateReviewerUseCase, CreateReviewerUseCaseOptions } from '../../usecases/CreateReviewerUseCase';
-import { Reviewer } from '../../../domain/Entities/Reviewer';
+import { CreateReviewerUseCase, CreateReviewerUseCaseOptions } from '../../../../application/usecases/CreateReviewerUseCase';
+import { Reviewer } from '../../../../domain/Entities/Reviewer';
 
 const createReviewerUseCase = CreateReviewerUseCase.create(console);
 
