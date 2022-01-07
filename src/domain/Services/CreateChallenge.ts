@@ -1,6 +1,6 @@
 import { Challenge } from '../Entities/Challenge';
-import { ChallengeRepository } from '../Interfaces/ChallengeRepository';
-import { GithubClientInterface } from '../Interfaces/GithubClientInterface';
+import { ChallengeRepository } from '../Ports/ChallengeRepository';
+import { GithubClientInterface } from '../Ports/GithubClientInterface';
 
 export class CreateChallengeError extends Error {}
 

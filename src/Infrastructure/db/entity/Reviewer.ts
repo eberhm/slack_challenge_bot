@@ -1,8 +1,8 @@
-import { Identifier } from "../../../domain/ValueObjects/Identifier";
-import { Reviewer as ReviewerEntity } from "../../../domain/Entities/Reviewer"
-import { Entity, Column, PrimaryColumn } from "typeorm";
-import { GithubUser } from "../../../domain/ValueObjects/GithubUser";
-import { SlackId, SlackUser } from "../../../domain/ValueObjects/SlackUser";
+import { Identifier } from '../../../domain/ValueObjects/Identifier';
+import { Reviewer as ReviewerEntity } from '../../../domain/Entities/Reviewer';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { GithubUser } from '../../../domain/ValueObjects/GithubUser';
+import { SlackId, SlackUser } from '../../../domain/ValueObjects/SlackUser';
 
 @Entity()
 export class Reviewer {
@@ -23,7 +23,7 @@ export const buildFromOrm = (reviewer: Reviewer): ReviewerEntity => {
             new GithubUser(reviewer.githubUsername),
             new SlackUser(reviewer.slackUserId)
         );
-}
+};
 
 export const mapToOrm = (reviewer: ReviewerEntity): Reviewer => {
     const DTO = new Reviewer();
@@ -33,4 +33,4 @@ export const mapToOrm = (reviewer: ReviewerEntity): Reviewer => {
     DTO.slackUserId = reviewer.getSlackUser().getUserId();
 
     return DTO;
-}
+};

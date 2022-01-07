@@ -1,7 +1,7 @@
 import { CandidateChallenge } from "../../../src/domain/Entities/CandidateChallenge";
 import { Challenge } from "../../../src/domain/Entities/Challenge";
 import { Reviewer } from "../../../src/domain/Entities/Reviewer";
-import { GithubClientInterface } from "../../../src/domain/Interfaces/GithubClientInterface";
+import { GithubClientInterface } from "../../../src/domain/Ports/GithubClientInterface";
 import { Candidate } from "../../../src/domain/ValueObjects/Candidate";
 import { GithubUser } from "../../../src/domain/ValueObjects/GithubUser";
 

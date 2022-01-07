@@ -3,8 +3,8 @@ import { CreateChallengeUseCase, CreateChallengeUseCaseError, CreateChallengeUse
 import { VoidLogger } from '../../../src/application/usecases/Logger';
 import { Challenge } from '../../../src/domain/Entities/Challenge';
 import { CreateChallenge, CreateChallengeError } from '../../../src/domain/Services/CreateChallenge';
-import { InMemoryChallengeRepository } from '../../Infrastructure/Repositories/InMemoryChallengeRepository';
-import { SandboxedGithubClient } from '../../Infrastructure/Repositories/SandboxedGithubClient';
+import { InMemoryChallengeRepository } from '../../Infrastructure/adapters/InMemoryChallengeRepository';
+import { SandboxedGithubClient } from '../../Infrastructure/adapters/SandboxedGithubClient';
 
 describe('CreateChallengeUseCase', () => {
     const ANY_NAME = "any name";

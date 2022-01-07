@@ -1,14 +1,14 @@
-import { CandidateChallengeRepository } from '../../Infrastructure/CandidateChallengeRepository';
-import { ReviewerRepository } from '../../Infrastructure/ReviewerRepository';
+import { CandidateChallengeRepository } from '../../infrastructure/adapters/CandidateChallengeRepository';
+import { ReviewerRepository } from '../../infrastructure/adapters/ReviewerRepository';
 import { AddReviewersToCodeChallenge } from '../../domain/Services/AddReviewersToCodeChallenge';
 import { CandidateChallenge } from '../../domain/Entities/CandidateChallenge';
 import { CreateCandidateChallenge } from '../../domain/Services/CreateCandidateChallenge';
 import { Candidate } from '../../domain/ValueObjects/Candidate';
-import { GithubClient } from '../../Infrastructure/GithubClient';
+import { GithubClient } from '../../infrastructure/adapters/GithubClient';
 import { SlackId } from '../../domain/ValueObjects/SlackUser';
 import { UseCaseLogger } from './Logger';
-import { ChallengeRepository as ChallengeRepositoryInterface} from '../../domain/Interfaces/ChallengeRepository';
-import { ChallengeRepository } from '../../Infrastructure/ChallengeRepository';
+import { ChallengeRepository as ChallengeRepositoryInterface } from '../../domain/Ports/ChallengeRepository';
+import { ChallengeRepository } from '../../infrastructure/adapters/ChallengeRepository';
 
 export type SendChallengeUseCaseOptions = {
   candidateName: string;
@@ -87,7 +87,7 @@ export class SendChallengeUseCase {
   }
 
   private async addReviewersToCandidateCallenge(candidateChallenge: CandidateChallenge, reviewer1: string | undefined, reviewer2: string | undefined) {
-    let reviewers: SlackId[] = [];
+    const reviewers: SlackId[] = [];
     if (reviewer1) {
       reviewers.push(reviewer1);
     }

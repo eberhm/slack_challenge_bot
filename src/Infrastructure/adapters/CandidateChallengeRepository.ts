@@ -1,8 +1,8 @@
-import { CandidateChallenge } from '../../src/domain/Entities/CandidateChallenge';
-import { Reviewer } from '../../src/domain/Entities/Reviewer';
-import { CandidateChallengeRepository as CandidateChallengeRepositoryInterface } from '../domain/Interfaces/CandidateChallengeRepository';
-import { getRepository } from './db/connection';
-import { CandidateChallenge as CandidateChallengeDTO, mapToOrm } from './db/entity/CandidateChallenge';
+import { CandidateChallenge } from '../../domain/Entities/CandidateChallenge';
+import { Reviewer } from '../../domain/Entities/Reviewer';
+import { CandidateChallengeRepository as CandidateChallengeRepositoryInterface } from '../../domain/Ports/CandidateChallengeRepository';
+import { getRepository } from '../db/connection';
+import { CandidateChallenge as CandidateChallengeDTO, mapToOrm } from '../db/entity/CandidateChallenge';
 
 
 export class CandidateChallengeRepository implements CandidateChallengeRepositoryInterface {

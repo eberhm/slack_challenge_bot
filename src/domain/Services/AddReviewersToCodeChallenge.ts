@@ -1,7 +1,7 @@
 import { CandidateChallenge } from '../Entities/CandidateChallenge';
-import { CandidateChallengeRepository } from '../Interfaces/CandidateChallengeRepository';
-import { ReviewerRepository } from '../Interfaces/ReviewerRepository';
-import { GithubClientInterface } from '../Interfaces/GithubClientInterface';
+import { CandidateChallengeRepository } from '../Ports/CandidateChallengeRepository';
+import { ReviewerRepository } from '../Ports/ReviewerRepository';
+import { GithubClientInterface } from '../Ports/GithubClientInterface';
 import { SlackId } from '../ValueObjects/SlackUser';
 
 export class AddReviewersToCodeChallengeError extends Error {}

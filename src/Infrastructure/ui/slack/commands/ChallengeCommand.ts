@@ -1,14 +1,13 @@
 import { App, ViewSubmitAction } from '@slack/bolt';
 import { registerChallengePayload, CALLBACK_ID as REGISTER_CHALLENGE_CALLBACK_ID, registerChallengeSuccessResponse } from '../payloads/RegisterChallengePayloads';
 import { sendChallengePayload, CALLBACK_ID as SEND_CHALLENGE_CALLBACK_ID, sendChallengeSuccessResponse } from '../payloads/SendChallengePayloads';
-import { ChallengeRepository } from '../../../Infrastructure/ChallengeRepository';
-import { CreateChallengeUseCase, CreateChallengeUseCaseOptions } from '../../usecases/CreateChallengeUseCase';
+import { ChallengeRepository } from '../../../adapters/ChallengeRepository';
+import { CreateChallengeUseCase, CreateChallengeUseCaseOptions } from '../../../../application/usecases/CreateChallengeUseCase';
 import { parseResponse } from '../lib/ResponseParser';
-import { Challenge } from '../../../domain/Entities/Challenge';
-import { SendChallengeUseCase, SendChallengeUseCaseOptions } from '../../usecases/SendChallengeUseCase';
-import { CandidateChallenge } from '../../../domain/Entities/CandidateChallenge';
-import { ReviewerRepository } from '../../../Infrastructure/ReviewerRepository';
-import { Reviewer } from '../../../domain/Entities/Reviewer';
+import { Challenge } from '../../../../domain/Entities/Challenge';
+import { SendChallengeUseCase, SendChallengeUseCaseOptions } from '../../../../application/usecases/SendChallengeUseCase';
+import { CandidateChallenge } from '../../../../domain/Entities/CandidateChallenge';
+import { ReviewerRepository } from '../../../adapters/ReviewerRepository';
 
 const challengeRepository = new ChallengeRepository();
 const reviewersRepository = new ReviewerRepository();
@@ -19,7 +18,7 @@ export const register = (app: App) => {
 
     app.view<ViewSubmitAction>(REGISTER_CHALLENGE_CALLBACK_ID, async ({ ack, view, body, client }) => {
         try {
-            await ack({ response_action: 'clear' });
+            await ack({ 'response_action': 'clear' });
 
             const channel = JSON.parse(view.private_metadata).channel;
             const values = parseResponse(view.state.values);
@@ -44,7 +43,7 @@ export const register = (app: App) => {
 
     app.view<ViewSubmitAction>(SEND_CHALLENGE_CALLBACK_ID, async ({ body, client, ack, view }) => {
         try {
-            await ack({ response_action: 'clear' });
+            await ack({ 'response_action': 'clear' });
 
             const values = parseResponse(view.state.values);
             const channel = JSON.parse(view.private_metadata).channel;
@@ -88,17 +87,17 @@ export const register = (app: App) => {
             case 'send':
                 const challenges = await challengeRepository.findAll();
                 if (!Array.isArray(challenges) || challenges.length <= 0) {
-                    respond(`There are no challenges registered. You should register first a challenge. Use \`/challenge register\``);
+                    respond('There are no challenges registered. You should register first a challenge. Use `/challenge register`');
                 } else {
-                    await client.views.open(sendChallengePayload(body.trigger_id, challenges, payloadMetadata))
+                    await client.views.open(sendChallengePayload(body.trigger_id, challenges, payloadMetadata));
                 }
                 break;
             case 'register':
                 await client.views.open(registerChallengePayload(body.trigger_id, payloadMetadata));
                 break;
             default:
-                respond(`Command not defined. Allowed commands: send, register`);
+                respond('Command not defined. Allowed commands: send, register');
                 break;
         }
     });
-}
+};
