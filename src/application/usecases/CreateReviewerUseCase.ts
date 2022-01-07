@@ -1,6 +1,6 @@
-import { ReviewerRepository } from '../../Infrastructure/ReviewerRepository';
+import { ReviewerRepository } from '../../infrastructure/adapters/ReviewerRepository';
 import { CreateReviewer } from '../../domain/Services/CreateReviewer';
-import { Reviewer } from 'src/domain/Entities/Reviewer';
+import { Reviewer } from '../../domain/Entities/Reviewer';
 import { UseCaseLogger } from './Logger';
 
 export type CreateReviewerUseCaseOptions = {
@@ -16,7 +16,7 @@ export class CreateReviewerUseCase {
  
   constructor(logger: UseCaseLogger, createReviewerService: CreateReviewer) {
     this.logger = logger || console;
-    this.createReviewerService = createReviewerService || {} as any;
+    this.createReviewerService = createReviewerService;
   }
 
   static create(logger: UseCaseLogger): CreateReviewerUseCase {

@@ -1,9 +1,9 @@
 import { CandidateChallenge } from '../Entities/CandidateChallenge';
 import { Identifier } from '../ValueObjects/Identifier';
-import { CandidateChallengeRepository } from '../Interfaces/CandidateChallengeRepository';
+import { CandidateChallengeRepository } from '../Ports/CandidateChallengeRepository';
 import { Candidate } from '../ValueObjects/Candidate';
-import { ChallengeRepository } from '../Interfaces/ChallengeRepository';
-import { GithubClientInterface } from '../Interfaces/GithubClientInterface';
+import { ChallengeRepository } from '../Ports/ChallengeRepository';
+import { GithubClientInterface } from '../Ports/GithubClientInterface';
 
 export class CreateCandidateChallengeError extends Error {}
 
@@ -47,7 +47,7 @@ export class CreateCandidateChallenge {
           challengeId,
         );
 
-        await this.githubClient.addCollaboratorToCandidateChallenge(candidateChallenge, candidate.getGithubUser())
+        await this.githubClient.addCollaboratorToCandidateChallenge(candidateChallenge, candidate.getGithubUser());
         
         return await this.candidateChallengeRepository.save(candidateChallenge);
       } catch (e) {

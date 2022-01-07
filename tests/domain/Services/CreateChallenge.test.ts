@@ -1,7 +1,7 @@
 import 'jest';
 import { CreateChallenge, CreateChallengeError } from '../../../src/domain/Services/CreateChallenge';
-import { InMemoryChallengeRepository } from '../../Infrastructure/Repositories/InMemoryChallengeRepository';
-import { SandboxedGithubClient } from '../../Infrastructure/Repositories/SandboxedGithubClient';
+import { InMemoryChallengeRepository } from '../../infrastructure/adapters/InMemoryChallengeRepository';
+import { SandboxedGithubClient } from '../../infrastructure/adapters/SandboxedGithubClient';
 
 describe('CreateChallenge Service creates a challenge and returns it after storing it', () => {
     let githubClient, challengeRepository;

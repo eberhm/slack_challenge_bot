@@ -1,12 +1,12 @@
-import { SlackId } from '../domain/ValueObjects/SlackUser';
+import { SlackId } from '../../domain/ValueObjects/SlackUser';
 import { Repository, In } from 'typeorm';
-import { Reviewer } from '../domain/Entities/Reviewer';
-import { ReviewerRepository as ReviewerRepositoryInterface } from '../domain/Interfaces/ReviewerRepository';
-import { getRepository } from './db/connection';
-import { Reviewer as ReviewerDTO, mapToOrm, buildFromOrm } from './db/entity/Reviewer';
+import { Reviewer } from '../../domain/Entities/Reviewer';
+import { ReviewerRepository as ReviewerRepositoryPort } from '../../domain/Ports/ReviewerRepository';
+import { getRepository } from '../db/connection';
+import { Reviewer as ReviewerDTO, mapToOrm, buildFromOrm } from '../db/entity/Reviewer';
 
 
-export class ReviewerRepository implements ReviewerRepositoryInterface {
+export class ReviewerRepository implements ReviewerRepositoryPort {
     async findBySlackIds(slackIds: SlackId[]): Promise<Reviewer[] | undefined> {
         try {
             return await this.getOrmRepository()

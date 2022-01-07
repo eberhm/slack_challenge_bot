@@ -1,6 +1,6 @@
-import { Identifier } from "../../../domain/ValueObjects/Identifier";
-import { Challenge as ChallengeEntity } from "../../../domain/Entities/Challenge"
-import { Entity, Column, PrimaryColumn } from "typeorm";
+import { Identifier } from '../../../domain/ValueObjects/Identifier';
+import { Challenge as ChallengeEntity } from '../../../domain/Entities/Challenge';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Challenge {
@@ -21,7 +21,7 @@ export const buildFromOrm = (challenge: Challenge): ChallengeEntity => {
             challenge.name,
             new URL(challenge.githubRepositoryUrl)
         );
-}
+};
 
 export const mapToOrm = (challenge: ChallengeEntity): Challenge => {
     const DTO = new Challenge();
@@ -31,4 +31,4 @@ export const mapToOrm = (challenge: ChallengeEntity): Challenge => {
     DTO.githubRepositoryUrl = challenge.getUrl().toString();
 
     return DTO;
-}
+};

@@ -1,18 +1,18 @@
 import 'jest';
 import { Challenge } from '../../../src/domain/Entities/Challenge';
 import { Reviewer } from '../../../src/domain/Entities/Reviewer';
-import { CandidateChallengeRepository } from '../../../src/domain/Interfaces/CandidateChallengeRepository';
-import { ChallengeRepository } from '../../../src/domain/Interfaces/ChallengeRepository';
-import { GithubClientInterface } from '../../../src/domain/Interfaces/GithubClientInterface';
-import { ReviewerRepository } from '../../../src/domain/Interfaces/ReviewerRepository';
+import { CandidateChallengeRepository } from '../../../src/domain/Ports/CandidateChallengeRepository';
+import { ChallengeRepository } from '../../../src/domain/Ports/ChallengeRepository';
+import { GithubClientInterface } from '../../../src/domain/Ports/GithubClientInterface';
+import { ReviewerRepository } from '../../../src/domain/Ports/ReviewerRepository';
 import { CreateCandidateChallenge, CreateCandidateChallengeError } from '../../../src/domain/Services/CreateCandidateChallenge';
 import { CreateChallenge } from '../../../src/domain/Services/CreateChallenge';
 import { CreateReviewer } from '../../../src/domain/Services/CreateReviewer';
 import { Candidate } from '../../../src/domain/ValueObjects/Candidate';
-import { InMemoryCandidateChallengeRepository } from '../../infrastructure/Repositories/InMemoryCandidateChallengeRepository';
-import { InMemoryChallengeRepository } from '../../infrastructure/Repositories/InMemoryChallengeRepository';
-import { InMemoryReviewerRepository } from '../../infrastructure/Repositories/InMemoryReviewerRepository';
-import { SandboxedGithubClient, CHALLENGE_FOR_CANDIDATE_REPO_URL } from '../../infrastructure/Repositories/SandboxedGithubClient';
+import { InMemoryCandidateChallengeRepository } from '../../infrastructure/adapters/InMemoryCandidateChallengeRepository';
+import { InMemoryChallengeRepository } from '../../infrastructure/adapters/InMemoryChallengeRepository';
+import { InMemoryReviewerRepository } from '../../infrastructure/adapters/InMemoryReviewerRepository';
+import { SandboxedGithubClient, CHALLENGE_FOR_CANDIDATE_REPO_URL } from '../../infrastructure/adapters/SandboxedGithubClient';
 
 describe('CreateCandidateChallenge Service', () => {
 

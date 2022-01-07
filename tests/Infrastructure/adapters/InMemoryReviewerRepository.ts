@@ -1,6 +1,6 @@
 import { Reviewer } from "../../../src/domain/Entities/Reviewer";
 import { Identifier } from "../../../src/domain/ValueObjects/Identifier";
-import { ReviewerRepository } from "../../../src/domain/Interfaces/ReviewerRepository";
+import { ReviewerRepository } from "../../../src/domain/Ports/ReviewerRepository";
 import { SlackId } from "../../../src/domain/ValueObjects/SlackUser";
 
 /*

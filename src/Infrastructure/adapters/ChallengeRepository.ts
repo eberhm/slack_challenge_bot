@@ -1,11 +1,11 @@
 import { Repository } from 'typeorm';
-import { Challenge } from '../../src/domain/Entities/Challenge';
-import { ChallengeRepository as ChallengeRepositoryInterface } from '../domain/Interfaces/ChallengeRepository';
-import { getRepository } from './db/connection';
-import { Challenge as ChallengeDTO, mapToOrm, buildFromOrm } from './db/entity/Challenge';
+import { Challenge } from '../../domain/Entities/Challenge';
+import { ChallengeRepository as ChallengeRepositoryPort } from '../../domain/Ports/ChallengeRepository';
+import { getRepository } from '../db/connection';
+import { Challenge as ChallengeDTO, mapToOrm, buildFromOrm } from '../db/entity/Challenge';
 
 
-export class ChallengeRepository implements ChallengeRepositoryInterface {
+export class ChallengeRepository implements ChallengeRepositoryPort {
 
     async findById(id: string): Promise<Challenge | undefined > {
         try {

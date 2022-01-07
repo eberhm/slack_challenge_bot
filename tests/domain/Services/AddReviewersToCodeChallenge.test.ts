@@ -1,20 +1,20 @@
 import 'jest';
 import { CandidateChallenge } from '../../../src/domain/Entities/CandidateChallenge';
 import { Challenge } from '../../../src/domain/Entities/Challenge';
-import { CandidateChallengeRepository } from '../../../src/domain/Interfaces/CandidateChallengeRepository';
-import { ChallengeRepository } from '../../../src/domain/Interfaces/ChallengeRepository';
-import { GithubClientInterface } from '../../../src/domain/Interfaces/GithubClientInterface';
-import { ReviewerRepository } from '../../../src/domain/Interfaces/ReviewerRepository';
+import { CandidateChallengeRepository } from '../../../src/domain/Ports/CandidateChallengeRepository';
+import { ChallengeRepository } from '../../../src/domain/Ports/ChallengeRepository';
+import { GithubClientInterface } from '../../../src/domain/Ports/GithubClientInterface';
+import { ReviewerRepository } from '../../../src/domain/Ports/ReviewerRepository';
 import { AddReviewersToCodeChallenge, AddReviewersToCodeChallengeError } from '../../../src/domain/Services/AddReviewersToCodeChallenge';
 import { CreateChallenge } from '../../../src/domain/Services/CreateChallenge';
 import { CreateReviewer } from '../../../src/domain/Services/CreateReviewer';
 import { Candidate } from '../../../src/domain/ValueObjects/Candidate';
 import { Identifier } from '../../../src/domain/ValueObjects/Identifier';
 import { SlackId } from '../../../src/domain/ValueObjects/SlackUser';
-import { InMemoryCandidateChallengeRepository } from '../../infrastructure/Repositories/InMemoryCandidateChallengeRepository';
-import { InMemoryChallengeRepository } from '../../infrastructure/Repositories/InMemoryChallengeRepository';
-import { InMemoryReviewerRepository } from '../../infrastructure/Repositories/InMemoryReviewerRepository';
-import { SandboxedGithubClient } from '../../infrastructure/Repositories/SandboxedGithubClient';
+import { InMemoryCandidateChallengeRepository } from '../../infrastructure/adapters/InMemoryCandidateChallengeRepository';
+import { InMemoryChallengeRepository } from '../../infrastructure/adapters/InMemoryChallengeRepository';
+import { InMemoryReviewerRepository } from '../../infrastructure/adapters/InMemoryReviewerRepository';
+import { SandboxedGithubClient } from '../../infrastructure/adapters/SandboxedGithubClient';
 
 describe('AddReviewersToCodeChallenge Service', () => {
 

@@ -10,7 +10,7 @@ export const register = (app: App) => {
 
     app.view<ViewSubmitAction>(REGISTER_REVIEWER_CALLBACK_ID, async ({ ack, view, body, client }) => {
         try {
-            await ack({ response_action: 'clear' });
+            await ack({ 'response_action': 'clear' });
 
             const channel = JSON.parse(view.private_metadata).channel;
             const values = parseResponse(view.state.values);
@@ -48,8 +48,8 @@ export const register = (app: App) => {
                 await client.views.open(registerReviewerPayload(body.trigger_id, payloadMetadata));
                 break;
             default:
-                respond(`Command not defined. Allowed commands: register`);
+                respond('Command not defined. Allowed commands: register');
                 break;
         }
     });
-}
+};

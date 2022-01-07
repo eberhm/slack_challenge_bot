@@ -2,13 +2,13 @@ import type { Arguments, CommandBuilder } from 'yargs';
 import { CreateReviewerUseCase, CreateReviewerUseCaseOptions } from '../../../../application/usecases/CreateReviewerUseCase';
 import { Logger } from '../lib/Logger';
 
-export const command: string = 'create_reviewer <slackId> <githubUsername>';
-export const desc: string = 'Creates a reviewer establishing the relation between the slackId and the github username';
+export const command = 'create_reviewer <slackId> <githubUsername>';
+export const desc = 'Creates a reviewer establishing the relation between the slackId and the github username';
 
 export const builder: CommandBuilder<CreateReviewerUseCaseOptions, CreateReviewerUseCaseOptions> = (yargs) =>
   yargs
   .parserConfiguration({
-    "dot-notation": false
+    'dot-notation': false
   })
   .positional('slackId', { type: 'string', demandOption: true })
   .positional('githubHandler', { type: 'string', demandOption: true });

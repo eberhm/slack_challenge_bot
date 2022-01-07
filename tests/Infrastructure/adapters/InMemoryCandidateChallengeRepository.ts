@@ -1,6 +1,6 @@
 import { CandidateChallenge } from "../../../src/domain/Entities/CandidateChallenge";
 import { Reviewer } from "../../../src/domain/Entities/Reviewer";
-import { CandidateChallengeRepository } from "../../../src/domain/Interfaces/CandidateChallengeRepository";
+import { CandidateChallengeRepository } from "../../../src/domain/Ports/CandidateChallengeRepository";
 import { Identifier } from "../../../src/domain/ValueObjects/Identifier";
 
 

@@ -1,6 +1,6 @@
 import 'jest';
 import { CreateReviewer, CreateReviewerError } from '../../../src/domain/Services/createReviewer';
-import { InMemoryReviewerRepository } from '../../Infrastructure/Repositories/InMemoryReviewerRepository';
+import { InMemoryReviewerRepository } from '../../infrastructure/adapters/InMemoryReviewerRepository';
 
 describe('CreateReviewer Service creates a reviewer and returns it newly inserted in the DB', () => {
     const ANY_GITHUB_USERNAME = 'any_username';

@@ -3,7 +3,7 @@ import { CreateReviewerUseCase, CreateReviewerUseCaseError, CreateReviewerUseCas
 import { VoidLogger } from '../../../src/application/usecases/Logger';
 import { Reviewer } from '../../../src/domain/Entities/Reviewer';
 import { CreateReviewer, CreateReviewerError } from '../../../src/domain/Services/CreateReviewer';
-import { InMemoryReviewerRepository } from '../../Infrastructure/Repositories/InMemoryReviewerRepository';
+import { InMemoryReviewerRepository } from '../../Infrastructure/adapters/InMemoryReviewerRepository';
 
 describe('CreateReviewerUseCase', () => {
     const ANY_ID = "anystring";

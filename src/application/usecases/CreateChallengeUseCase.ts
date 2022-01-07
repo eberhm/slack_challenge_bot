@@ -1,7 +1,7 @@
 import { CreateChallenge } from '../../domain/Services/CreateChallenge';
-import { GithubClient } from '../../Infrastructure/GithubClient';
-import { ChallengeRepository } from '../../Infrastructure/ChallengeRepository';
-import { Challenge } from 'src/domain/Entities/Challenge';
+import { GithubClient } from '../../infrastructure/adapters/GithubClient';
+import { ChallengeRepository } from '../../infrastructure/adapters/ChallengeRepository';
+import { Challenge } from '../../domain/Entities/Challenge';
 import { UseCaseLogger } from './Logger';
 
 export type CreateChallengeUseCaseOptions = {

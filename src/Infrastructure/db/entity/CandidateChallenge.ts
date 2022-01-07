@@ -1,7 +1,7 @@
-import { Identifier } from "../../../domain/ValueObjects/Identifier";
-import { Candidate } from "../../../domain/ValueObjects/Candidate";
-import { CandidateChallenge as CandidateChallengeEntity } from "../../../domain/Entities/CandidateChallenge"
-import { Entity, Column, PrimaryColumn } from "typeorm";
+import { Identifier } from '../../../domain/ValueObjects/Identifier';
+import { Candidate } from '../../../domain/ValueObjects/Candidate';
+import { CandidateChallenge as CandidateChallengeEntity } from '../../../domain/Entities/CandidateChallenge';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class CandidateChallenge {
@@ -57,7 +57,7 @@ export const buildFromOrm = (candidateChallenge: CandidateChallenge): CandidateC
             reviewerIds,
             challengeId: candidateChallenge.challengeId
         });
-}
+};
 
 export const mapToOrm = (candidateChallenge: CandidateChallengeEntity): CandidateChallenge => {
     const [ reviewerId1, reviewerId2 ] = candidateChallenge.getReviewerIds();
@@ -73,4 +73,4 @@ export const mapToOrm = (candidateChallenge: CandidateChallengeEntity): Candidat
     DTO.challengeId = candidateChallenge.getChallengeId();
 
     return DTO;
-}
+};

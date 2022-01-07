@@ -1,10 +1,9 @@
-import { Challenge } from '../domain/Entities/Challenge';
-import { Reviewer } from '../domain/Entities/Reviewer';
-import { GithubClientInterface } from '../domain/Interfaces/GithubClientInterface';
-import { Candidate } from '../domain/ValueObjects/Candidate';
+import { Challenge } from '../../domain/Entities/Challenge';
+import { GithubClientInterface } from '../../domain/Ports/GithubClientInterface';
+import { Candidate } from '../../domain/ValueObjects/Candidate';
 import { Octokit } from 'octokit';
-import { CandidateChallenge } from '../domain/Entities/CandidateChallenge';
-import { GithubUser } from '../domain/ValueObjects/GithubUser';
+import { CandidateChallenge } from '../../domain/Entities/CandidateChallenge';
+import { GithubUser } from '../../domain/ValueObjects/GithubUser';
 
 export class GithubClientError extends Error {};
 
